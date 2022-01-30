@@ -9,6 +9,10 @@ import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+import 'dart:convert';
+
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI
 /// that uses a [SimpleTheme].
@@ -342,7 +346,24 @@ class SimplePuzzleTile extends StatelessWidget {
         ),
       ),
       onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+          ? () {
+              context.read<PuzzleBloc>().add(TileTapped(tile));
+              final channel = WebSocketChannel.connect(
+                Uri.parse('ws://127.0.0.1:4040/ws'),
+              );
+              channel.stream.listen((dynamic event) {
+                print(event.toString());
+              });
+
+              final message = json.encode({
+                'messageType': 'moveTile',
+                'id': 1,
+                'payload': TileTapped(tile).toJson(),
+                'valid': true,
+              });
+              channel.sink.add(message);
+              channel.sink.close();
+            }
           : null,
       child: Text(tile.value.toString()),
     );

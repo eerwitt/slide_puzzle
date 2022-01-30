@@ -20,13 +20,13 @@ void main() {
     group('PuzzleInitialized', () {
       test('supports value comparisons', () {
         expect(
-          PuzzleInitialized(shufflePuzzle: true),
-          equals(PuzzleInitialized(shufflePuzzle: true)),
+          PuzzleInitialized(shufflePuzzle: true, randomSeed: 123),
+          equals(PuzzleInitialized(shufflePuzzle: true, randomSeed: 123)),
         );
 
         expect(
-          PuzzleInitialized(shufflePuzzle: true),
-          isNot(PuzzleInitialized(shufflePuzzle: false)),
+          PuzzleInitialized(shufflePuzzle: true, randomSeed: 123),
+          isNot(PuzzleInitialized(shufflePuzzle: false, randomSeed: 123)),
         );
       });
     });

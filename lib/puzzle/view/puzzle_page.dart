@@ -52,9 +52,7 @@ class PuzzleView extends StatelessWidget {
         child: BlocProvider(
           create: (context) => PuzzleBloc(4)
             ..add(
-              PuzzleInitialized(
-                shufflePuzzle: shufflePuzzle,
-              ),
+              PuzzleInitialized(shufflePuzzle: shufflePuzzle, randomSeed: 123),
             ),
           child: const _Puzzle(
             key: Key('puzzle_view_puzzle'),

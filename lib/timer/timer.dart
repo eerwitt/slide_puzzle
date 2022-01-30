@@ -1,1 +1,1 @@
-export 'bloc/timer_bloc.dart';
+export 'package:slide_puzzle_shared/bloc/timer_bloc.dart';

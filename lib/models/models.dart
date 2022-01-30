@@ -1,4 +1,1 @@
-export 'position.dart';
-export 'puzzle.dart';
-export 'ticker.dart';
-export 'tile.dart';
+export 'package:slide_puzzle_shared/models/models.dart';

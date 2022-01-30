@@ -93,13 +93,12 @@ void main() {
     });
 
     group('PuzzleInitialized', () {
-      final random = Random(seed);
-
       blocTest<PuzzleBloc, PuzzleState>(
         'emits solvable 3x3 puzzle, [incomplete], 0 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to true',
-        build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: true)),
+        build: () => PuzzleBloc(3),
+        act: (bloc) =>
+            bloc.add(PuzzleInitialized(shufflePuzzle: true, randomSeed: seed)),
         expect: () => [PuzzleState(puzzle: puzzleSize3)],
         verify: (bloc) => expect(bloc.state.puzzle.isSolvable(), isTrue),
       );
@@ -107,8 +106,9 @@ void main() {
       blocTest<PuzzleBloc, PuzzleState>(
         'emits unshuffled 3x3 puzzle, 8 correct tiles, and 0 moves '
         'when initialized with size 3 and shuffle equal to false',
-        build: () => PuzzleBloc(3, random: random),
-        act: (bloc) => bloc.add(PuzzleInitialized(shufflePuzzle: false)),
+        build: () => PuzzleBloc(3),
+        act: (bloc) =>
+            bloc.add(PuzzleInitialized(shufflePuzzle: false, randomSeed: seed)),
         expect: () => [
           PuzzleState(
             puzzle: puzzleSize3Unshuffled,
@@ -379,7 +379,7 @@ void main() {
 
       blocTest<PuzzleBloc, PuzzleState>(
         'emits new solvable 3x3 puzzle with 0 moves when reset with size 3',
-        build: () => PuzzleBloc(3, random: random),
+        build: () => PuzzleBloc(3),
         seed: () => PuzzleState(
           puzzle: initialSize3Puzzle,
           numberOfCorrectTiles: 1,
