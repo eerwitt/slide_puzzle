@@ -6,6 +6,7 @@ import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
@@ -192,7 +193,9 @@ class SimpleStartSection extends StatelessWidget {
           medium: 83,
           large: 151,
         ),
-        const PuzzleName(),
+        PuzzleName(
+          key: puzzleNameKey,
+        ),
         const ResponsiveGap(large: 16),
         SimplePuzzleTitle(
           status: state.puzzleStatus,
@@ -203,10 +206,14 @@ class SimpleStartSection extends StatelessWidget {
           large: 32,
         ),
         NumberOfMovesAndTilesLeft(
+          key: numberOfMovesAndTilesLeftKey,
           numberOfMoves: state.numberOfMoves,
           numberOfTilesLeft: state.numberOfTilesLeft,
         ),
-        const ResponsiveGap(large: 32),
+        const ResponsiveGap(
+          large: 32,
+          small: 16,
+        ),
         ResponsiveLayoutBuilder(
           small: (_, __) => const SizedBox(),
           medium: (_, __) => const SizedBox(),
@@ -231,12 +238,13 @@ class SimplePuzzleTitle extends StatelessWidget {
     required this.status,
   }) : super(key: key);
 
-  /// The state of the puzzle.
+  /// The status of the puzzle.
   final PuzzleStatus status;
 
   @override
   Widget build(BuildContext context) {
     return PuzzleTitle(
+      key: puzzleTitleKey,
       title: status == PuzzleStatus.complete
           ? context.l10n.puzzleCompleted
           : context.l10n.puzzleChallengeTitle,
@@ -336,6 +344,31 @@ class SimplePuzzleTile extends StatelessWidget {
           ),
         ),
       ],
+      // ).copyWith(
+      //   foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
+      //   backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+      //     (states) {
+      //       if (tile.value == state.lastTappedTile?.value) {
+      //         return theme.pressedColor;
+      //       } else if (states.contains(MaterialState.hovered)) {
+      //         return theme.hoverColor;
+      //       } else {
+      //         return theme.defaultColor;
+      //       }
+      //     },
+      //   ),
+      // ),
+      // onPressed: state.puzzleStatus == PuzzleStatus.incomplete
+      //     ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+      //     : null,
+      // child: Text(
+      //   tile.value.toString(),
+      //   semanticsLabel: context.l10n.puzzleTileLabelText(
+      //     tile.value.toString(),
+      //     tile.currentPosition.x.toString(),
+      //     tile.currentPosition.y.toString(),
+      //   ),
+      // ),
     );
     // return TextButton(
     //   style: TextButton.styleFrom(
