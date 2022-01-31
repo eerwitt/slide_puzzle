@@ -29,18 +29,7 @@ class _AppState extends State<App> {
         Image.asset('assets/images/shuffle_icon.png').image,
         context,
       );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_large.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_medium.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_small.png').image,
-        context,
-      );
+      precacheImage(Image.asset('assets/backgrounds/water.png').image, context);
     });
   }
 
@@ -58,7 +47,20 @@ class _AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const PuzzlePage(),
+      home: Scaffold(
+        body: SizedBox.expand(
+          // -> 01
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('/backgrounds/water.png'),
+                fit: BoxFit.fill, // -> 02
+              ),
+            ),
+            child: const PuzzlePage(),
+          ),
+        ),
+      ),
     );
   }
 }

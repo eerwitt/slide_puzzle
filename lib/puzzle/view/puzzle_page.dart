@@ -43,20 +43,17 @@ class PuzzleView extends StatelessWidget {
     /// Shuffle only if the current theme is Simple.
     final shufflePuzzle = theme is SimpleTheme;
 
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: BlocProvider(
-        create: (context) => TimerBloc(
-          ticker: const Ticker(),
-        ),
-        child: BlocProvider(
-          create: (context) => PuzzleBloc(4)
-            ..add(
-              PuzzleInitialized(shufflePuzzle: shufflePuzzle, randomSeed: 123),
-            ),
-          child: const _Puzzle(
-            key: Key('puzzle_view_puzzle'),
+    return BlocProvider(
+      create: (context) => TimerBloc(
+        ticker: const Ticker(),
+      ),
+      child: BlocProvider(
+        create: (context) => PuzzleBloc(4)
+          ..add(
+            PuzzleInitialized(shufflePuzzle: shufflePuzzle, randomSeed: 123),
           ),
+        child: const _Puzzle(
+          key: Key('puzzle_view_puzzle'),
         ),
       ),
     );
@@ -75,7 +72,7 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
-            theme.layoutDelegate.backgroundBuilder(state),
+            // theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(

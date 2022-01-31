@@ -37,17 +37,17 @@ class SimplePuzzleLayoutDelegate extends PuzzleLayoutDelegate {
   @override
   Widget endSectionBuilder(PuzzleState state) {
     return Column(
-      children: [
-        const ResponsiveGap(
+      children: const [
+        ResponsiveGap(
           small: 32,
           medium: 48,
         ),
-        ResponsiveLayoutBuilder(
-          small: (_, child) => const SimplePuzzleShuffleButton(),
-          medium: (_, child) => const SimplePuzzleShuffleButton(),
-          large: (_, __) => const SizedBox(),
-        ),
-        const ResponsiveGap(
+        // ResponsiveLayoutBuilder(
+        //   small: (_, child) => const SimplePuzzleShuffleButton(),
+        //   medium: (_, child) => const SimplePuzzleShuffleButton(),
+        //   large: (_, __) => const SizedBox(),
+        // ),
+        ResponsiveGap(
           small: 32,
           medium: 48,
         ),
@@ -319,54 +319,71 @@ class SimplePuzzleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final tileId = tile.value;
 
-    return TextButton(
-      style: TextButton.styleFrom(
-        primary: PuzzleColors.white,
-        textStyle: PuzzleTextStyle.headline2.copyWith(
-          fontSize: tileFontSize,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
+    return Stack(
+      children: <Widget>[
+        Image.asset('/tiles/tile-$tileId.png'),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                context.read<PuzzleBloc>().add(TileTapped(tile));
+              },
+              child: Center(child: Text(tile.value.toString())),
+            ),
           ),
         ),
-      ).copyWith(
-        foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
-        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-          (states) {
-            if (tile.value == state.lastTappedTile?.value) {
-              return theme.pressedColor;
-            } else if (states.contains(MaterialState.hovered)) {
-              return theme.hoverColor;
-            } else {
-              return theme.defaultColor;
-            }
-          },
-        ),
-      ),
-      onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () {
-              context.read<PuzzleBloc>().add(TileTapped(tile));
-              final channel = WebSocketChannel.connect(
-                Uri.parse('ws://127.0.0.1:4040/ws'),
-              );
-              channel.stream.listen((dynamic event) {
-                print(event.toString());
-              });
-
-              final message = json.encode({
-                'messageType': 'moveTile',
-                'id': 1,
-                'payload': TileTapped(tile).toJson(),
-                'valid': true,
-              });
-              channel.sink.add(message);
-              channel.sink.close();
-            }
-          : null,
-      child: Text(tile.value.toString()),
+      ],
     );
+    // return TextButton(
+    //   style: TextButton.styleFrom(
+    //     primary: PuzzleColors.white,
+    //     textStyle: PuzzleTextStyle.headline2.copyWith(
+    //       fontSize: tileFontSize,
+    //     ),
+    //     shape: const RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.all(
+    //         Radius.circular(12),
+    //       ),
+    //     ),
+    //   ).copyWith(
+    //     foregroundColor: MaterialStateProperty.all(PuzzleColors.white),
+    //     backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+    //       (states) {
+    //         if (tile.value == state.lastTappedTile?.value) {
+    //           return theme.pressedColor;
+    //         } else if (states.contains(MaterialState.hovered)) {
+    //           return theme.hoverColor;
+    //         } else {
+    //           return theme.defaultColor;
+    //         }
+    //       },
+    //     ),
+    //   ),
+    //   onPressed: state.puzzleStatus == PuzzleStatus.incomplete
+    //       ? () {
+    //           context.read<PuzzleBloc>().add(TileTapped(tile));
+    //           final channel = WebSocketChannel.connect(
+    //             Uri.parse('ws://127.0.0.1:4040/ws'),
+    //           );
+    //           channel.stream.listen((dynamic event) {
+    //             print(event.toString());
+    //           });
+
+    //           final message = json.encode({
+    //             'messageType': 'moveTile',
+    //             'id': 1,
+    //             'payload': TileTapped(tile).toJson(),
+    //             'valid': true,
+    //           });
+    //           channel.sink.add(message);
+    //           channel.sink.close();
+    //         }
+    //       : null,
+    //   child: Text(tile.value.toString()),
+    // );
   }
 }
 
