@@ -141,7 +141,8 @@ void main() {
       await tester.tap(find.byType(DashatarPuzzleActionButton));
 
       verify(
-        () => puzzleBloc.add(PuzzleInitialized(shufflePuzzle: false)),
+        () => puzzleBloc
+            .add(PuzzleInitialized(shufflePuzzle: false, randomSeed: 123)),
       ).called(1);
     });
 

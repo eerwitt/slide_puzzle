@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,6 +57,19 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
     super.dispose();
   }
 
+  /// Gets the tile relative to the whitespace tile in the puzzle
+  /// defined by [relativeOffset].
+  Tile? getTileRelativeToWhitespaceTile(Puzzle puzzle, Offset relativeOffset) {
+    final whitespaceTile = puzzle.getWhitespaceTile();
+    return puzzle.tiles.singleWhereOrNull(
+      (tile) =>
+          tile.currentPosition.x ==
+              whitespaceTile.currentPosition.x + relativeOffset.dx &&
+          tile.currentPosition.y ==
+              whitespaceTile.currentPosition.y + relativeOffset.dy,
+    );
+  }
+
   void _handleKeyEvent(RawKeyEvent event) {
     final theme = context.read<ThemeBloc>().state.theme;
 
@@ -70,13 +85,13 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
       Tile? tile;
       if (physicalKey == PhysicalKeyboardKey.arrowDown) {
-        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(0, -1));
+        tile = getTileRelativeToWhitespaceTile(puzzle, const Offset(0, -1));
       } else if (physicalKey == PhysicalKeyboardKey.arrowUp) {
-        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(0, 1));
+        tile = getTileRelativeToWhitespaceTile(puzzle, const Offset(0, 1));
       } else if (physicalKey == PhysicalKeyboardKey.arrowRight) {
-        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(-1, 0));
+        tile = getTileRelativeToWhitespaceTile(puzzle, const Offset(-1, 0));
       } else if (physicalKey == PhysicalKeyboardKey.arrowLeft) {
-        tile = puzzle.getTileRelativeToWhitespaceTile(const Offset(1, 0));
+        tile = getTileRelativeToWhitespaceTile(puzzle, const Offset(1, 0));
       }
 
       if (tile != null) {

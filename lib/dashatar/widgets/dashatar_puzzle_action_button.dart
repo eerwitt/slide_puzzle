@@ -86,7 +86,8 @@ class _DashatarPuzzleActionButtonState
                     // (unshuffled) before the countdown completes.
                     if (hasStarted) {
                       context.read<PuzzleBloc>().add(
-                            const PuzzleInitialized(shufflePuzzle: false),
+                            const PuzzleInitialized(
+                                shufflePuzzle: false, randomSeed: 123),
                           );
                     }
 
