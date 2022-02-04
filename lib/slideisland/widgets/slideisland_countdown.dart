@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
@@ -12,12 +12,12 @@ import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
-/// {@template dashatar_countdown}
+/// {@template slideisland_countdown}
 /// Displays the countdown before the puzzle is started.
 /// {@endtemplate}
-class DashatarCountdown extends StatefulWidget {
-  /// {@macro dashatar_countdown}
-  const DashatarCountdown({
+class SlideIslandCountdown extends StatefulWidget {
+  /// {@macro slideisland_countdown}
+  const SlideIslandCountdown({
     Key? key,
     AudioPlayerFactory? audioPlayer,
   })  : _audioPlayerFactory = audioPlayer ?? getAudioPlayer,
@@ -26,10 +26,10 @@ class DashatarCountdown extends StatefulWidget {
   final AudioPlayerFactory _audioPlayerFactory;
 
   @override
-  State<DashatarCountdown> createState() => _DashatarCountdownState();
+  State<SlideIslandCountdown> createState() => _SlideIslandCountdownState();
 }
 
-class _DashatarCountdownState extends State<DashatarCountdown> {
+class _SlideIslandCountdownState extends State<SlideIslandCountdown> {
   late final AudioPlayer _audioPlayer;
 
   @override
@@ -49,7 +49,7 @@ class _DashatarCountdownState extends State<DashatarCountdown> {
   Widget build(BuildContext context) {
     return AudioControlListener(
       audioPlayer: _audioPlayer,
-      child: BlocListener<DashatarPuzzleBloc, DashatarPuzzleState>(
+      child: BlocListener<SlideIslandPuzzleBloc, SlideIslandPuzzleState>(
         listener: (context, state) {
           if (!state.isCountdownRunning) {
             return;
@@ -61,7 +61,7 @@ class _DashatarCountdownState extends State<DashatarCountdown> {
           }
 
           // Start the puzzle timer when the countdown finishes.
-          if (state.status == DashatarPuzzleStatus.started) {
+          if (state.status == SlideIslandPuzzleStatus.started) {
             context.read<TimerBloc>().add(const TimerStarted());
           }
 
@@ -75,19 +75,19 @@ class _DashatarCountdownState extends State<DashatarCountdown> {
           small: (_, __) => const SizedBox(),
           medium: (_, __) => const SizedBox(),
           large: (_, __) =>
-              BlocBuilder<DashatarPuzzleBloc, DashatarPuzzleState>(
+              BlocBuilder<SlideIslandPuzzleBloc, SlideIslandPuzzleState>(
             builder: (context, state) {
               if (!state.isCountdownRunning || state.secondsToBegin > 3) {
                 return const SizedBox();
               }
 
               if (state.secondsToBegin > 0) {
-                return DashatarCountdownSecondsToBegin(
+                return SlideIslandCountdownSecondsToBegin(
                   key: ValueKey(state.secondsToBegin),
                   secondsToBegin: state.secondsToBegin,
                 );
               } else {
-                return const DashatarCountdownGo();
+                return const SlideIslandCountdownGo();
               }
             },
           ),
@@ -97,13 +97,13 @@ class _DashatarCountdownState extends State<DashatarCountdown> {
   }
 }
 
-/// {@template dashatar_countdown_seconds_to_begin}
+/// {@template slideisland_countdown_seconds_to_begin}
 /// Display how many seconds are left to begin the puzzle.
 /// {@endtemplate}
 @visibleForTesting
-class DashatarCountdownSecondsToBegin extends StatefulWidget {
-  /// {@macro dashatar_countdown_seconds_to_begin}
-  const DashatarCountdownSecondsToBegin({
+class SlideIslandCountdownSecondsToBegin extends StatefulWidget {
+  /// {@macro slideisland_countdown_seconds_to_begin}
+  const SlideIslandCountdownSecondsToBegin({
     Key? key,
     required this.secondsToBegin,
   }) : super(key: key);
@@ -112,12 +112,12 @@ class DashatarCountdownSecondsToBegin extends StatefulWidget {
   final int secondsToBegin;
 
   @override
-  State<DashatarCountdownSecondsToBegin> createState() =>
-      _DashatarCountdownSecondsToBeginState();
+  State<SlideIslandCountdownSecondsToBegin> createState() =>
+      _SlideIslandCountdownSecondsToBeginState();
 }
 
-class _DashatarCountdownSecondsToBeginState
-    extends State<DashatarCountdownSecondsToBegin>
+class _SlideIslandCountdownSecondsToBeginState
+    extends State<SlideIslandCountdownSecondsToBegin>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> inOpacity;
@@ -165,7 +165,8 @@ class _DashatarCountdownSecondsToBeginState
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((DashatarThemeBloc bloc) => bloc.state.theme);
+    final theme =
+        context.select((SlideIslandThemeBloc bloc) => bloc.state.theme);
 
     return FadeTransition(
       opacity: outOpacity,
@@ -185,19 +186,19 @@ class _DashatarCountdownSecondsToBeginState
   }
 }
 
-/// {@template dashatar_countdown_go}
+/// {@template slideisland_countdown_go}
 /// Displays a "Go!" text when the countdown reaches 0 seconds.
 /// {@endtemplate}
 @visibleForTesting
-class DashatarCountdownGo extends StatefulWidget {
-  /// {@macro dashatar_countdown_go}
-  const DashatarCountdownGo({Key? key}) : super(key: key);
+class SlideIslandCountdownGo extends StatefulWidget {
+  /// {@macro slideisland_countdown_go}
+  const SlideIslandCountdownGo({Key? key}) : super(key: key);
 
   @override
-  State<DashatarCountdownGo> createState() => _DashatarCountdownGoState();
+  State<SlideIslandCountdownGo> createState() => _SlideIslandCountdownGoState();
 }
 
-class _DashatarCountdownGoState extends State<DashatarCountdownGo>
+class _SlideIslandCountdownGoState extends State<SlideIslandCountdownGo>
     with TickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> inOpacity;
@@ -253,7 +254,8 @@ class _DashatarCountdownGoState extends State<DashatarCountdownGo>
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((DashatarThemeBloc bloc) => bloc.state.theme);
+    final theme =
+        context.select((SlideIslandThemeBloc bloc) => bloc.state.theme);
 
     return Padding(
       padding: const EdgeInsets.only(top: 101),
@@ -266,7 +268,7 @@ class _DashatarCountdownGoState extends State<DashatarCountdownGo>
             child: ScaleTransition(
               scale: inScale,
               child: Text(
-                context.l10n.dashatarCountdownGo,
+                context.l10n.slideislandCountdownGo,
                 style: PuzzleTextStyle.countdownTime.copyWith(
                   fontSize: 100,
                   color: theme.defaultColor,

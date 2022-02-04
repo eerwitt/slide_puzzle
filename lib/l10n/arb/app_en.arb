@@ -66,6 +66,44 @@
             }
         }
     },
+    "slideislandStartGame": "Start Game",
+    "@slideislandStartGame": {
+        "description": "Shown before the puzzle is started"
+    },
+    "slideislandGetReady": "Get ready...",
+    "@slideislandStartPuzzle": {
+        "description": "Shown when the puzzle is loading"
+    },
+    "slideislandRestart": "Restart",
+    "@slideislandRestart": {
+        "description": "Shown after the puzzle is started and may be restarted"
+    },
+    "slideislandCountdownGo": "GO!",
+    "@slideislandCountdownGo": {
+        "description": "Shown when the countdown has just finished and the puzzle is about to start"
+    },
+    "slideislandSuccessCompleted": "Puzzle challenge completed",
+    "@slideislandSuccessCompleted": {
+        "description": "Shown as a title in the SlideIsland success state"
+    },
+    "slideislandSuccessWellDone": "Well done.\nCongrats!",
+    "@slideislandSuccessWellDone": {
+        "description": "Shown as a subtitle in the SlideIsland success state"
+    },
+    "slideislandSuccessScore": "Score",
+    "@slideislandSuccessScore": {
+        "description": "Shown as a score title in the SlideIsland success state"
+    },
+    "slideislandSuccessNumberOfMoves": "{numberOfMoves} Moves",
+    "@slideislandSuccessNumberOfMoves": {
+        "description": "Shown as a number of moves in the SlideIsland success state",
+        "placeholders": {
+            "numberOfMoves": {
+                "type": "String",
+                "example": "5"
+            }
+        }
+    },
     "puzzleTileLabelText": "Value: {value}, position: {x}, {y}",
     "@puzzleTileLabelText": {
         "description": "Semantic label for the puzzle tile",
@@ -139,5 +177,47 @@
     "dashatarSuccessShareText": "Just solved the #FlutterPuzzleHack! Check it out ↓",
     "@dashatarSuccessShareText": {
         "description": "The text to share for this Flutter Puzzle challenge, shown in the Dashatar success state"
+    },
+    "slideislandPuzzleDurationLabelText": "{hours} hours {minutes} minutes {seconds} seconds",
+    "@slideislandPuzzleDurationLabelText": {
+        "description": "Semantic label for the SlideIsland timer",
+        "placeholders": {
+            "hours": {
+                "type": "String",
+                "example": "2"
+            },
+            "minutes": {
+                "type": "String",
+                "example": "6"
+            },
+            "seconds": {
+                "type": "String",
+                "example": "24"
+            }
+        }
+    },
+    "slideislandBlueDashLabelText": "Dumbbell Dash",
+    "@slideislandBlueDashLabelText": {
+        "description": "Semantic label for the blue Dash"
+    },
+    "slideislandGreenDashLabelText": "Skateboard Dash",
+    "@slideislandGreenDashLabelText": {
+        "description": "Semantic label for the green Dash"
+    },
+    "slideislandYellowDashLabelText": "Sandwich Dash",
+    "@slideislandYellowDashLabelText": {
+        "description": "Semantic label for the yellow Dash"
+    },
+    "slideislandSuccessShareYourScoreTitle": "Share your score!",
+    "@slideislandSuccessShareYourScoreTitle": {
+        "description": "Shown as a share title in the SlideIsland success state"
+    },
+    "slideislandSuccessShareYourScoreMessage": "Share this puzzle to challenge your friends and be sure to check out the Flutter Puzzle Hack.",
+    "@slideislandSuccessShareYourScoreMessage": {
+        "description": "Shown as a share message in the SlideIsland success state"
+    },
+    "slideislandSuccessShareText": "Just solved the #FlutterPuzzleHack! Check it out ↓",
+    "@slideislandSuccessShareText": {
+        "description": "The text to share for this Flutter Puzzle challenge, shown in the SlideIsland success state"
     }
 }

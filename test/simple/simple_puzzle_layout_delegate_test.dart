@@ -562,7 +562,9 @@ void main() {
 
         await tester.tap(find.byType(SimplePuzzleShuffleButton));
 
-        verify(() => puzzleBloc.add(PuzzleReset())).called(1);
+        verify(() => puzzleBloc.add(
+                PuzzleSetup(randomSeed: 123, shufflePuzzle: true, size: 4)))
+            .called(1);
       });
     });
 

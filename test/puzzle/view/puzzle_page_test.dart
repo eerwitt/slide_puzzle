@@ -789,8 +789,8 @@ void main() {
 
           await tester.tap(find.byType(PuzzleMenuItem));
 
-          verify(() => puzzleBloc
-                  .add(PuzzleInitialized(shufflePuzzle: true, randomSeed: 123)))
+          verify(() => puzzleBloc.add(
+                  PuzzleSetup(shufflePuzzle: true, randomSeed: 123, size: 3)))
               .called(1);
         });
 
@@ -819,7 +819,7 @@ void main() {
           await tester.tap(find.byType(PuzzleMenuItem));
 
           verify(() => puzzleBloc.add(
-                  PuzzleInitialized(shufflePuzzle: false, randomSeed: 123)))
+                  PuzzleSetup(shufflePuzzle: false, randomSeed: 123, size: 3)))
               .called(1);
         });
       });

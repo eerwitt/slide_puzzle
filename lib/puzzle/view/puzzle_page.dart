@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
 import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
@@ -36,7 +37,22 @@ class PuzzlePage extends StatelessWidget {
           ),
         ),
         BlocProvider(
+          create: (_) => SlideIslandThemeBloc(
+            themes: const [
+              BlueSlideIslandTheme(),
+              GreenSlideIslandTheme(),
+              YellowSlideIslandTheme()
+            ],
+          ),
+        ),
+        BlocProvider(
           create: (_) => DashatarPuzzleBloc(
+            secondsToBegin: 3,
+            ticker: const Ticker(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => SlideIslandPuzzleBloc(
             secondsToBegin: 3,
             ticker: const Ticker(),
           ),
@@ -46,6 +62,7 @@ class PuzzlePage extends StatelessWidget {
             initialThemes: [
               const SimpleTheme(),
               context.read<DashatarThemeBloc>().state.theme,
+              context.read<SlideIslandThemeBloc>().state.theme,
             ],
           ),
         ),
@@ -81,11 +98,27 @@ class PuzzleView extends StatelessWidget {
       body: AnimatedContainer(
         duration: PuzzleThemeAnimationDuration.backgroundColorChange,
         decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocListener<DashatarThemeBloc, DashatarThemeState>(
-          listener: (context, state) {
-            final dashatarTheme = context.read<DashatarThemeBloc>().state.theme;
-            context.read<ThemeBloc>().add(ThemeUpdated(theme: dashatarTheme));
-          },
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<DashatarThemeBloc, DashatarThemeState>(
+              listener: (context, state) {
+                final dashatarTheme =
+                    context.read<DashatarThemeBloc>().state.theme;
+                context
+                    .read<ThemeBloc>()
+                    .add(ThemeUpdated(theme: dashatarTheme));
+              },
+            ),
+            BlocListener<SlideIslandThemeBloc, SlideIslandThemeState>(
+              listener: (context, state) {
+                final slideislandTheme =
+                    context.read<SlideIslandThemeBloc>().state.theme;
+                context
+                    .read<ThemeBloc>()
+                    .add(ThemeUpdated(theme: slideislandTheme));
+              },
+            ),
+          ],
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -94,11 +127,12 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc()
                   ..add(
-                    PuzzleInitialized(
+                    PuzzleSetup(
                       shufflePuzzle: shufflePuzzle,
                       randomSeed: 123,
+                      size: 4,
                     ),
                   ),
               ),
@@ -450,11 +484,16 @@ class PuzzleMenuItem extends StatelessWidget {
                       const DashatarCountdownStopped(),
                     );
 
+                context.read<SlideIslandPuzzleBloc>().add(
+                      const SlideIslandCountdownStopped(),
+                    );
+
                 // Initialize the puzzle board for the newly selected theme.
                 context.read<PuzzleBloc>().add(
-                      PuzzleInitialized(
+                      PuzzleSetup(
                         shufflePuzzle: theme is SimpleTheme,
                         randomSeed: 123,
+                        size: 4,
                       ),
                     );
               },

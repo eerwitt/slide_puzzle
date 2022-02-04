@@ -74,7 +74,9 @@ void main() {
         audioControlBloc: audioControlBloc,
       );
 
-      verify(() => puzzleBloc.add(PuzzleReset())).called(3);
+      verify(() => puzzleBloc
+              .add(PuzzleSetup(randomSeed: 123, size: 4, shufflePuzzle: true)))
+          .called(3);
     });
 
     testWidgets(

@@ -20,13 +20,13 @@ void main() {
     group('PuzzleInitialized', () {
       test('supports value comparisons', () {
         expect(
-          PuzzleInitialized(shufflePuzzle: true, randomSeed: 123),
-          equals(PuzzleInitialized(shufflePuzzle: true, randomSeed: 123)),
+          PuzzleSetup(shufflePuzzle: true, randomSeed: 123, size: 3),
+          equals(PuzzleSetup(shufflePuzzle: true, randomSeed: 123, size: 3)),
         );
 
         expect(
-          PuzzleInitialized(shufflePuzzle: true, randomSeed: 123),
-          isNot(PuzzleInitialized(shufflePuzzle: false, randomSeed: 123)),
+          PuzzleSetup(shufflePuzzle: true, randomSeed: 123, size: 3),
+          isNot(PuzzleSetup(shufflePuzzle: false, randomSeed: 123, size: 3)),
         );
       });
     });
@@ -35,12 +35,6 @@ void main() {
       test('supports value comparisons', () {
         expect(TileTapped(tile1), equals(TileTapped(tile1)));
         expect(TileTapped(tile2), isNot(TileTapped(tile1)));
-      });
-    });
-
-    group('PuzzleReset', () {
-      test('supports value comparisons', () {
-        expect(PuzzleReset(), equals(PuzzleReset()));
       });
     });
   });

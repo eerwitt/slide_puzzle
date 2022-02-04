@@ -142,7 +142,7 @@ void main() {
 
       verify(
         () => puzzleBloc
-            .add(PuzzleInitialized(shufflePuzzle: false, randomSeed: 123)),
+            .add(PuzzleSetup(shufflePuzzle: false, randomSeed: 123, size: 4)),
       ).called(1);
     });
 
