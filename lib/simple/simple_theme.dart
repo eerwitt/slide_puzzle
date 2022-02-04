@@ -16,11 +16,9 @@ class SimpleTheme extends PuzzleTheme {
   String get name => 'Simple';
 
   @override
-  bool get hasTimer => true;
+  bool get hasTimer => false;
 
   @override
-  bool get hasCountdown => true;
-
   Color get nameColor => PuzzleColors.grey1;
 
   @override

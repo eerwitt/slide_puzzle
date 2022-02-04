@@ -183,20 +183,7 @@ class _AppState extends State<App> {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: Scaffold(
-        body: SizedBox.expand(
-          // -> 01
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('/backgrounds/water.png'),
-                fit: BoxFit.fill, // -> 02
-              ),
-            ),
-            child: const PuzzlePage(),
-          ),
-        ),
-      ),
+      home: const PuzzlePage(),
     );
   }
 }
