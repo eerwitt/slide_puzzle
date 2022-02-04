@@ -12,7 +12,7 @@ class YellowDashatarTheme extends DashatarTheme {
 
   @override
   String semanticsLabel(BuildContext context) =>
-      context.l10n.dashatarYellowDashLabelText;
+      context.l10n.dashatarYellowDashLabelText as String;
 
   @override
   Color get backgroundColor => PuzzleColors.yellowPrimary;

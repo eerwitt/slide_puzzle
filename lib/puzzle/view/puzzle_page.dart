@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
 import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_event.dart';
 import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
@@ -136,6 +138,12 @@ class PuzzleView extends StatelessWidget {
                     ),
                   ),
               ),
+              BlocProvider(
+                create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
+                  ..add(
+                    const ConnectToServerEvent('ws://127.0.0.1:4040/ws'),
+                  ),
+              ),
             ],
             child: const _Puzzle(
               key: Key('puzzle_view_puzzle'),
@@ -154,6 +162,7 @@ class _Puzzle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final serverState = context.select((ServerSyncBloc bloc) => bloc.state);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -176,6 +185,12 @@ class _Puzzle extends StatelessWidget {
             ),
             if (theme is! SimpleTheme)
               theme.layoutDelegate.backgroundBuilder(state),
+            Text(
+              serverState.messageId.toString(),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ],
         );
       },

@@ -110,7 +110,6 @@ class _AppState extends State<App> {
         Image.asset('assets/images/shuffle_icon.png').image,
         context,
       );
-      precacheImage(Image.asset('assets/backgrounds/water.png').image, context);
       precacheImage(
         Image.asset('assets/images/timer_icon.png').image,
         context,
@@ -178,7 +177,7 @@ class _AppState extends State<App> {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
-      localizationsDelegates: const [
+      localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
       ],

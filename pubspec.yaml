@@ -42,13 +42,17 @@ flutter:
   assets:
     - assets/audio/
     - assets/images/
-    - assets/backgrounds/
     - assets/images/audio_control/
     - assets/images/dashatar/gallery/
     - assets/images/dashatar/success/
     - assets/images/dashatar/green/
     - assets/images/dashatar/blue/
     - assets/images/dashatar/yellow/
+    - assets/images/slideisland/gallery/
+    - assets/images/slideisland/success/
+    - assets/images/slideisland/green/
+    - assets/images/slideisland/blue/
+    - assets/images/slideisland/yellow/
   fonts:
     - family: GoogleSans
       fonts:

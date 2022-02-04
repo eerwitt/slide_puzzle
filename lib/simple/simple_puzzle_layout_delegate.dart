@@ -10,10 +10,6 @@ import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
-import 'package:web_socket_channel/web_socket_channel.dart';
-
-import 'dart:convert';
-
 /// {@template simple_puzzle_layout_delegate}
 /// A delegate for computing the layout of the puzzle UI
 /// that uses a [SimpleTheme].
