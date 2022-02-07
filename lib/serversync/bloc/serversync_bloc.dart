@@ -63,13 +63,10 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
       case MessageType.MoveTile:
         // TODO: Handle this case.
         break;
-      case MessageType.ResetPuzzle:
-        const puzzleSetup = PuzzleSetup(
-          shufflePuzzle: true,
-          randomSeed: 123,
-          size: 4,
-        );
+      case MessageType.PuzzleSetup:
+        final puzzleSetup = PuzzleSetup.fromJson(message.payload);
         puzzleBloc.add(puzzleSetup);
+
         break;
     }
   }

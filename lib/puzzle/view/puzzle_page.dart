@@ -141,7 +141,8 @@ class PuzzleView extends StatelessWidget {
               BlocProvider(
                 create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
                   ..add(
-                    const ConnectToServerEvent('ws://127.0.0.1:4040/ws'),
+                    const ConnectToServerEvent(
+                        'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws'),
                   ),
               ),
             ],

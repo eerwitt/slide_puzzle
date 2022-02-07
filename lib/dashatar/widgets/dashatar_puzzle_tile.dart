@@ -10,6 +10,7 @@ import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/theme/themes/themes.dart';
 
 abstract class _TileSize {
@@ -147,6 +148,9 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
                 onPressed: canPress
                     ? () {
                         context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                        context
+                            .read<ServerSyncBloc>()
+                            .add(TileTapped(widget.tile));
                         unawaited(_audioPlayer?.replay());
                       }
                     : null,

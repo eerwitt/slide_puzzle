@@ -6,6 +6,7 @@ import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -368,7 +369,10 @@ class SimplePuzzleTile extends StatelessWidget {
         ),
       ),
       onPressed: state.puzzleStatus == PuzzleStatus.incomplete
-          ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
+          ? () {
+              context.read<PuzzleBloc>().add(TileTapped(tile));
+              context.read<ServerSyncBloc>().add(TileTapped(tile));
+            }
           : null,
       child: Text(
         tile.value.toString(),

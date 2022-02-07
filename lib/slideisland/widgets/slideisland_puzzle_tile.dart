@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
@@ -148,6 +149,9 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
                 onPressed: canPress
                     ? () {
                         context.read<PuzzleBloc>().add(TileTapped(widget.tile));
+                        context
+                            .read<ServerSyncBloc>()
+                            .add(TileTapped(widget.tile));
                         unawaited(_audioPlayer?.replay());
                       }
                     : null,
