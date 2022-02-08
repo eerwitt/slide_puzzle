@@ -8,7 +8,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 // ignore: public_member_api_docs
 class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
   // ignore: public_member_api_docs
-  ServerSyncBloc(this.puzzleBloc) : super(const ServerSyncState(1)) {
+  ServerSyncBloc(this.puzzleBloc)
+      : super(const ServerSyncState(messageId: 1, playerRank: 1)) {
     on<ConnectToServerEvent>(_onConnectToServer);
     on<DisconnectFromServerEvent>(_onDisconnectFromServer);
     on<TileTapped>(_onPuzzleTileTapped);
@@ -40,7 +41,16 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
     channel?.sink.close();
   }
 
-  void _onPuzzleTileTapped(TileTapped event, Emitter<ServerSyncState> emit) {}
+  void _onPuzzleTileTapped(TileTapped event, Emitter<ServerSyncState> emit) {
+    final message = BaseMessage(
+      id: state.messageId,
+      messageType: MessageType.TileTapped,
+      payload: event.toJson(),
+      valid: true,
+    );
+
+    channel?.sink.add(message.toRawJson());
+  }
 
   void _onMessageFromServer(
       dynamic rawMessage, WebSocketSink sink, Emitter<ServerSyncState> emit) {
@@ -60,12 +70,17 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
       case MessageType.FindMatch:
         // TODO: Handle this case.
         break;
-      case MessageType.MoveTile:
+      case MessageType.TileTapped:
         // TODO: Handle this case.
         break;
       case MessageType.PuzzleSetup:
         final puzzleSetup = PuzzleSetup.fromJson(message.payload);
         puzzleBloc.add(puzzleSetup);
+
+        break;
+      case MessageType.RoundUpdate:
+        final roundUpdate = RoundUpdateEvent.fromJson(message.payload);
+        emit(state.copyWith(playerRank: roundUpdate.playerRank));
 
         break;
     }

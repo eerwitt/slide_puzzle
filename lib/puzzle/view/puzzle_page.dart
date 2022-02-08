@@ -142,7 +142,9 @@ class PuzzleView extends StatelessWidget {
                 create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
                   ..add(
                     const ConnectToServerEvent(
-                        'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws'),
+                      'ws://127.0.0.1:8080/ws',
+                      /*'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',*/
+                    ),
                   ),
               ),
             ],
@@ -187,7 +189,7 @@ class _Puzzle extends StatelessWidget {
             if (theme is! SimpleTheme)
               theme.layoutDelegate.backgroundBuilder(state),
             Text(
-              serverState.messageId.toString(),
+              serverState.playerRank.toString(),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
