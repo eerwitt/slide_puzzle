@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:bloc/bloc.dart';
 import 'package:slide_puzzle_shared/bloc/puzzle_bloc.dart';
 import 'package:slide_puzzle_shared/messages/general.dart';
@@ -5,14 +7,25 @@ import 'package:very_good_slide_puzzle/serversync/bloc/serversync_event.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_state.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-// ignore: public_member_api_docs
+class ServerMessageEvent extends PuzzleEvent {}
+
 class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
-  // ignore: public_member_api_docs
   ServerSyncBloc(this.puzzleBloc)
-      : super(const ServerSyncState(messageId: 1, playerRank: 1)) {
+      : super(
+          const ServerSyncState(
+            messageId: 1,
+            playerRank: 1,
+            currentRound: 1,
+            gameState: GameState.Lobby,
+            playerState: PlayerState.None,
+            numberOfRounds: 1,
+            secondsRemaining: 0,
+          ),
+        ) {
     on<ConnectToServerEvent>(_onConnectToServer);
     on<DisconnectFromServerEvent>(_onDisconnectFromServer);
     on<TileTapped>(_onPuzzleTileTapped);
+    on<MessageReceivedEvent>(_onMessageReceived);
   }
 
   WebSocketChannel? channel;
@@ -25,7 +38,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
     );
 
     channel?.stream.listen((dynamic message) =>
-        _onMessageFromServer(message, channel!.sink, emit));
+        add(MessageReceivedEvent(message as String, channel!.sink)));
 
     final message = BaseMessage(
       id: state.messageId,
@@ -52,10 +65,9 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
     channel?.sink.add(message.toRawJson());
   }
 
-  void _onMessageFromServer(
-      dynamic rawMessage, WebSocketSink sink, Emitter<ServerSyncState> emit) {
-    // TODO: emit the state changes on valid message
-    final message = BaseMessage.fromRawJson(rawMessage as String);
+  void _onMessageReceived(
+      MessageReceivedEvent event, Emitter<ServerSyncState> emit) {
+    final message = BaseMessage.fromRawJson(event.rawMessage);
 
     switch (message.messageType) {
       case MessageType.CreatePlayer:
@@ -65,7 +77,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
             payload: <String, dynamic>{},
             valid: true);
 
-        sink.add(response.toRawJson());
+        event.websocketSink.add(response.toRawJson());
         break;
       case MessageType.FindMatch:
         // TODO: Handle this case.
@@ -78,9 +90,22 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
         puzzleBloc.add(puzzleSetup);
 
         break;
+      case MessageType.MatchUpdate:
+        final matchUpdate = MatchUpdateEvent.fromJson(message.payload);
+        emit(state.copyWith(
+          currentRound: matchUpdate.currentRound,
+          numberOfRounds: matchUpdate.numberOfRounds,
+          gameState: matchUpdate.gameState,
+          playerState: matchUpdate.playerState,
+        ));
+
+        break;
       case MessageType.RoundUpdate:
         final roundUpdate = RoundUpdateEvent.fromJson(message.payload);
-        emit(state.copyWith(playerRank: roundUpdate.playerRank));
+        emit(state.copyWith(
+          playerRank: roundUpdate.playerRank,
+          secondsRemaining: roundUpdate.secondsRemaining,
+        ));
 
         break;
     }

@@ -189,7 +189,7 @@ class _Puzzle extends StatelessWidget {
             if (theme is! SimpleTheme)
               theme.layoutDelegate.backgroundBuilder(state),
             Text(
-              serverState.playerRank.toString(),
+              'Rank: ${serverState.playerRank} Round: ${serverState.currentRound} Rounds: ${serverState.numberOfRounds} Seconds Remaining: ${serverState.secondsRemaining} Game State: ${serverState.gameState} Player State: ${serverState.playerState}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),

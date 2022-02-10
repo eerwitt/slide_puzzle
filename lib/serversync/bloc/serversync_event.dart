@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:equatable/equatable.dart';
 
 import 'package:slide_puzzle_shared/bloc/puzzle_bloc.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ServerSyncEvent extends PuzzleEvent {
   const ServerSyncEvent();
@@ -30,4 +33,14 @@ class FindMatchEvent extends ServerSyncEvent {
 
   @override
   List<Object> get props => [];
+}
+
+class MessageReceivedEvent extends ServerSyncEvent {
+  const MessageReceivedEvent(this.rawMessage, this.websocketSink);
+
+  final String rawMessage;
+  final WebSocketSink websocketSink;
+
+  @override
+  List<Object> get props => [rawMessage, websocketSink];
 }
