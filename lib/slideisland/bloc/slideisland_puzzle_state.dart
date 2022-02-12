@@ -27,11 +27,13 @@ class SlideIslandPuzzleState extends Equatable {
   final int secondsToBegin;
 
   /// The status of the current puzzle.
-  SlideIslandPuzzleStatus get status => isCountdownRunning && secondsToBegin > 0
+  SlideIslandPuzzleStatus get status => SlideIslandPuzzleStatus
+          .started /*isCountdownRunning && secondsToBegin > 0
       ? SlideIslandPuzzleStatus.loading
       : (secondsToBegin == 0
           ? SlideIslandPuzzleStatus.started
-          : SlideIslandPuzzleStatus.notStarted);
+          : SlideIslandPuzzleStatus.notStarted)*/
+      ;
 
   @override
   List<Object> get props => [isCountdownRunning, secondsToBegin];

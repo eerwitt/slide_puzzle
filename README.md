@@ -24,6 +24,7 @@ $ flutter run -d chrome
 
 ```sh
 $ flutter build web
+$ flutter build web; if ($?) {firebase deploy}
 ```
 
 ---

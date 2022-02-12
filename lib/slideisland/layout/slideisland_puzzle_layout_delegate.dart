@@ -35,8 +35,10 @@ class SlideIslandPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
           medium: 32,
         ),
         ResponsiveLayoutBuilder(
-          small: (_, child) => const SlideIslandPuzzleActionButton(),
-          medium: (_, child) => const SlideIslandPuzzleActionButton(),
+          small: (_, child) =>
+              const SizedBox(), // const SlideIslandPuzzleActionButton(),
+          medium: (_, child) =>
+              const SizedBox(), // const SlideIslandPuzzleActionButton(),
           large: (_, __) => const SizedBox(),
         ),
         const ResponsiveGap(
@@ -44,8 +46,8 @@ class SlideIslandPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
           medium: 54,
         ),
         ResponsiveLayoutBuilder(
-          small: (_, child) => const SlideIslandThemePicker(),
-          medium: (_, child) => const SlideIslandThemePicker(),
+          small: (_, child) => const SizedBox(), // SlideIslandThemePicker(),
+          medium: (_, child) => const SizedBox(), //SlideIslandThemePicker(),
           large: (_, child) => const SizedBox(),
         ),
         const ResponsiveGap(
@@ -68,7 +70,7 @@ class SlideIslandPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
       child: ResponsiveLayoutBuilder(
         small: (_, child) => const SizedBox(),
         medium: (_, child) => const SizedBox(),
-        large: (_, child) => const SlideIslandThemePicker(),
+        large: (_, child) => const SizedBox(), //SlideIslandThemePicker(),
       ),
     );
   }

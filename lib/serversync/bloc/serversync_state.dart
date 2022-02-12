@@ -4,18 +4,23 @@ import 'package:equatable/equatable.dart';
 import 'package:slide_puzzle_shared/messages/general.dart';
 
 class ServerSyncState extends Equatable {
-  const ServerSyncState(
-      {required this.messageId,
-      required this.playerRank,
-      required this.secondsRemaining,
-      required this.currentRound,
-      required this.numberOfRounds,
-      required this.gameState,
-      required this.playerState});
+  const ServerSyncState({
+    required this.messageId,
+    required this.playerRank,
+    required this.playerScore,
+    required this.secondsRemaining,
+    required this.playersConnected,
+    required this.currentRound,
+    required this.numberOfRounds,
+    required this.gameState,
+    required this.playerState,
+  });
 
   final int messageId;
   final int playerRank;
+  final int playerScore;
   final int secondsRemaining;
+  final int playersConnected;
   final int currentRound;
   final int numberOfRounds;
   final GameState gameState;
@@ -25,7 +30,9 @@ class ServerSyncState extends Equatable {
   List<Object> get props => [
         messageId,
         playerRank,
+        playerScore,
         secondsRemaining,
+        playersConnected,
         currentRound,
         numberOfRounds,
         gameState,
@@ -35,7 +42,9 @@ class ServerSyncState extends Equatable {
   ServerSyncState copyWith(
       {int? messageId,
       int? playerRank,
+      int? playerScore,
       int? secondsRemaining,
+      int? playersConnected,
       int? currentRound,
       int? numberOfRounds,
       GameState? gameState,
@@ -43,7 +52,9 @@ class ServerSyncState extends Equatable {
     return ServerSyncState(
       messageId: messageId ?? this.messageId,
       playerRank: playerRank ?? this.playerRank,
+      playerScore: playerScore ?? this.playerScore,
       secondsRemaining: secondsRemaining ?? this.secondsRemaining,
+      playersConnected: playersConnected ?? this.playersConnected,
       currentRound: currentRound ?? this.currentRound,
       numberOfRounds: numberOfRounds ?? this.numberOfRounds,
       gameState: gameState ?? this.gameState,

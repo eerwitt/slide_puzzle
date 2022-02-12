@@ -15,11 +15,13 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
           const ServerSyncState(
             messageId: 1,
             playerRank: 1,
+            playerScore: 0,
             currentRound: 1,
             gameState: GameState.Lobby,
             playerState: PlayerState.None,
             numberOfRounds: 1,
             secondsRemaining: 0,
+            playersConnected: 1,
           ),
         ) {
     on<ConnectToServerEvent>(_onConnectToServer);
@@ -97,6 +99,8 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
           numberOfRounds: matchUpdate.numberOfRounds,
           gameState: matchUpdate.gameState,
           playerState: matchUpdate.playerState,
+          secondsRemaining: matchUpdate.secondsRemainingInCurrentState,
+          playersConnected: matchUpdate.playersConnected,
         ));
 
         break;
@@ -104,9 +108,12 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
         final roundUpdate = RoundUpdateEvent.fromJson(message.payload);
         emit(state.copyWith(
           playerRank: roundUpdate.playerRank,
-          secondsRemaining: roundUpdate.secondsRemaining,
+          playerScore: roundUpdate.currentScore,
         ));
 
+        break;
+      case MessageType.HealthCheck:
+        // TODO: Handle this case.
         break;
     }
   }

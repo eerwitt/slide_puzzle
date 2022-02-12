@@ -60,7 +60,8 @@ class SlideIslandStartSection extends StatelessWidget {
         ResponsiveLayoutBuilder(
           small: (_, __) => const SizedBox(),
           medium: (_, __) => const SizedBox(),
-          large: (_, __) => const SlideIslandPuzzleActionButton(),
+          large: (_, __) =>
+              const SizedBox(), /* const SlideIslandPuzzleActionButton(),*/
         ),
         ResponsiveLayoutBuilder(
           small: (_, __) => const SlideIslandTimer(),

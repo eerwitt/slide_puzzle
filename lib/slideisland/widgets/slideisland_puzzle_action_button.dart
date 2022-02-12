@@ -85,15 +85,6 @@ class _SlideIslandPuzzleActionButtonState
                           ),
                         );
 
-                    // Initialize the puzzle board to show the initial puzzle
-                    // (unshuffled) before the countdown completes.
-                    if (hasStarted) {
-                      context.read<PuzzleBloc>().add(
-                            const PuzzleSetup(
-                                shufflePuzzle: false, randomSeed: 123, size: 4),
-                          );
-                    }
-
                     unawaited(_audioPlayer.replay());
                   },
             textColor: isLoading ? theme.defaultColor : null,
