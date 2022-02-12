@@ -62,8 +62,6 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeBloc(
             initialThemes: [
-              const SimpleTheme(),
-              context.read<DashatarThemeBloc>().state.theme,
               context.read<SlideIslandThemeBloc>().state.theme,
             ],
           ),
@@ -128,22 +126,21 @@ class PuzzleView extends StatelessWidget {
                   ticker: const Ticker(),
                 ),
               ),
-              BlocProvider(
-                create: (context) => PuzzleBloc()
-                  ..add(
-                    PuzzleSetup(
-                      shufflePuzzle: shufflePuzzle,
-                      randomSeed: 123,
-                      size: 4,
-                    ),
+              BlocProvider(create: (context) => PuzzleBloc()
+                  // ..add(
+                  //   PuzzleSetup(
+                  //     shufflePuzzle: shufflePuzzle,
+                  //     randomSeed: 123,
+                  //     size: 4,
+                  //   ),
+                  // ),
                   ),
-              ),
               BlocProvider(
                 create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
                   ..add(
                     const ConnectToServerEvent(
-                      'ws://127.0.0.1:8080/ws',
-                      /*'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',*/
+                      /*'ws://127.0.0.1:8080/ws',*/
+                      'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
                     ),
                   ),
               ),
