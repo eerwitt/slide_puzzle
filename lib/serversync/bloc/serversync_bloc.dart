@@ -17,7 +17,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
             playerRank: 1,
             playerScore: 0,
             currentRound: 1,
-            gameState: GameState.Lobby,
+            gameState: GameState.GameOver,
             playerState: PlayerState.None,
             numberOfRounds: 1,
             secondsRemaining: 0,
@@ -35,12 +35,18 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
 
   void _onConnectToServer(
       ConnectToServerEvent event, Emitter<ServerSyncState> emit) {
+    emit(state.copyWith(playerState: PlayerState.Connecting));
     channel = WebSocketChannel.connect(
       Uri.parse(event.connecturi /* 'ws://127.0.0.1:4040/ws' */),
     );
 
-    channel?.stream.listen((dynamic message) =>
-        add(MessageReceivedEvent(message as String, channel!.sink)));
+    channel?.stream.listen(
+      (dynamic message) =>
+          add(MessageReceivedEvent(message as String, channel!.sink)),
+      onError: (Object error, StackTrace stacktrace) =>
+          add(const DisconnectFromServerEvent()),
+      onDone: () {},
+    );
 
     final message = BaseMessage(
       id: state.messageId,
@@ -54,6 +60,10 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
   void _onDisconnectFromServer(
       DisconnectFromServerEvent event, Emitter<ServerSyncState> emit) {
     channel?.sink.close();
+    emit(state.copyWith(
+      playerState: PlayerState.Disconnecting,
+      gameState: GameState.GameOver,
+    ));
   }
 
   void _onPuzzleTileTapped(TileTapped event, Emitter<ServerSyncState> emit) {
@@ -82,10 +92,8 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
         event.websocketSink.add(response.toRawJson());
         break;
       case MessageType.FindMatch:
-        // TODO: Handle this case.
         break;
       case MessageType.TileTapped:
-        // TODO: Handle this case.
         break;
       case MessageType.PuzzleSetup:
         final puzzleSetup = PuzzleSetup.fromJson(message.payload);
@@ -113,7 +121,6 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
 
         break;
       case MessageType.HealthCheck:
-        // TODO: Handle this case.
         break;
     }
   }

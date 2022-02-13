@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_state.dart';
 import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/displayscoreandrank.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 
 /// {@template slideisland_start_section}
@@ -23,6 +26,7 @@ class SlideIslandStartSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final status =
         context.select((SlideIslandPuzzleBloc bloc) => bloc.state.status);
+    final serverState = context.select((ServerSyncBloc bloc) => bloc.state);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,12 +49,10 @@ class SlideIslandStartSection extends StatelessWidget {
           medium: 16,
           large: 32,
         ),
-        NumberOfMovesAndTilesLeft(
+        DisplayScoreAndRank(
           key: numberOfMovesAndTilesLeftKey,
-          numberOfMoves: state.numberOfMoves,
-          numberOfTilesLeft: status == SlideIslandPuzzleStatus.started
-              ? state.numberOfTilesLeft
-              : state.puzzle.tiles.length - 1,
+          score: serverState.playerScore,
+          rank: serverState.playerRank,
         ),
         const ResponsiveGap(
           small: 8,

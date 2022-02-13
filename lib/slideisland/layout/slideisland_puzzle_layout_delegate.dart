@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_state.dart';
 import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
@@ -21,7 +23,9 @@ class SlideIslandPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
         padding: const EdgeInsets.only(left: 50, right: 32),
         child: child,
       ),
-      child: (_) => SlideIslandStartSection(state: state),
+      child: (_) => SlideIslandStartSection(
+        state: state,
+      ),
     );
   }
 

@@ -20,6 +20,14 @@
     "@puzzleNumberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
     },
+    "puzzleScore": "Score",
+    "@puzzleScore": {
+        "description": "Number of pieces in the correct place."
+    },
+    "puzzleRank": "Rank",
+    "@puzzleRank": {
+        "description": "Score compared to competitors."
+    },
     "puzzleShuffle": "Shuffle",
     "@puzzleShuffle": {
         "description": "Shown on the button that shuffle the puzzle"
@@ -119,6 +127,20 @@
             "y": {
                 "type": "String",
                 "example": "0"
+            }
+        }
+    },
+    "puzzleDisplayScoreAndRankLabelText": "Score: {score}, Rank: {rank}",
+    "@puzzleDisplayScoreAndRankLabelText": {
+        "description": "Semantic label for the puzzle tile",
+        "placeholders": {
+            "score": {
+                "type": "String",
+                "example": "10"
+            },
+            "rank": {
+                "type": "String",
+                "example": "10"
             }
         }
     },

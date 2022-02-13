@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -36,8 +37,8 @@ class SlideIslandTimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secondsElapsed =
-        context.select((TimerBloc bloc) => bloc.state.secondsElapsed);
+    final secondsRemaining =
+        context.select((ServerSyncBloc bloc) => bloc.state.secondsRemaining);
 
     return ResponsiveLayoutBuilder(
       small: (_, child) => child!,
@@ -54,7 +55,7 @@ class SlideIslandTimer extends StatelessWidget {
                 ? const Size(28, 28)
                 : const Size(32, 32));
 
-        final timeElapsed = Duration(seconds: secondsElapsed);
+        final timeRemaining = Duration(seconds: secondsRemaining);
 
         return Row(
           key: const Key('slideisland_timer'),
@@ -66,9 +67,9 @@ class SlideIslandTimer extends StatelessWidget {
               ),
               duration: PuzzleThemeAnimationDuration.textStyle,
               child: Text(
-                _formatDuration(timeElapsed),
-                key: ValueKey(secondsElapsed),
-                semanticsLabel: _getDurationLabel(timeElapsed, context),
+                _formatDuration(timeRemaining),
+                key: ValueKey(secondsRemaining),
+                semanticsLabel: _getDurationLabel(timeRemaining, context),
               ),
             ),
             Gap(iconPadding ?? 8),
