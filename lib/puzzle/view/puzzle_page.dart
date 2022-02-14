@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:slide_puzzle_shared/messages/general.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
 import 'package:very_good_slide_puzzle/dashatar/dashatar.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
@@ -11,6 +12,10 @@ import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_connecting.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_lobby.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_lost.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_winner.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
@@ -166,6 +171,9 @@ class _Puzzle extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
+        final playerState =
+            context.select((ServerSyncBloc bloc) => bloc.state.playerState);
+
         return Stack(
           children: [
             if (theme is SimpleTheme)
@@ -176,9 +184,18 @@ class _Puzzle extends StatelessWidget {
                   minHeight: constraints.maxHeight,
                 ),
                 child: Column(
-                  children: const [
-                    PuzzleHeader(),
-                    PuzzleSections(),
+                  children: [
+                    const PuzzleHeader(),
+                    if (playerState == PlayerState.Connecting)
+                      const SlideIslandConnecting(
+                        key: Key('slide_island_connecting'),
+                      )
+                    else if (playerState == PlayerState.Won)
+                      const SlideIslandWinner(key: Key('slide_island_winner'))
+                    else if (playerState == PlayerState.Lost)
+                      const SlideIslandLost(key: Key('slide_island_lost'))
+                    else
+                      const PuzzleSections(),
                   ],
                 ),
               ),
@@ -186,7 +203,7 @@ class _Puzzle extends StatelessWidget {
             if (theme is! SimpleTheme)
               theme.layoutDelegate.backgroundBuilder(state),
             Text(
-              'Round: ${serverState.currentRound} Players: ${serverState.playersConnected} Game State: ${serverState.gameState} Player State: ${serverState.playerState}',
+              'Player State: ${serverState.playerState}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
@@ -232,8 +249,8 @@ class PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
+              // PuzzleLogo(),
+              // PuzzleMenu(),
             ],
           ),
         ),
@@ -244,8 +261,8 @@ class PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
+              // PuzzleLogo(),
+              // PuzzleMenu(),
             ],
           ),
         ),
@@ -284,20 +301,27 @@ class PuzzleSections extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final serverState = context.select((ServerSyncBloc bloc) => bloc.state);
 
     return ResponsiveLayoutBuilder(
       small: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleMenu(),
-          const PuzzleBoard(),
+          // const PuzzleMenu(),
+          if (serverState.gameState == GameState.Lobby)
+            const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else
+            const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
       medium: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleBoard(),
+          if (serverState.gameState == GameState.Lobby)
+            const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else
+            const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -307,7 +331,10 @@ class PuzzleSections extends StatelessWidget {
           Expanded(
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
-          const PuzzleBoard(),
+          if (serverState.gameState == GameState.Lobby)
+            const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else
+            const PuzzleBoard(),
           Expanded(
             child: theme.layoutDelegate.endSectionBuilder(state),
           ),

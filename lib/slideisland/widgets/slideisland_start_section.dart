@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
-import 'package:very_good_slide_puzzle/serversync/bloc/serversync_state.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/slideisland/widgets/displayscoreandrank.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 
@@ -24,8 +23,6 @@ class SlideIslandStartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final status =
-        context.select((SlideIslandPuzzleBloc bloc) => bloc.state.status);
     final serverState = context.select((ServerSyncBloc bloc) => bloc.state);
 
     return Column(
@@ -51,7 +48,7 @@ class SlideIslandStartSection extends StatelessWidget {
         ),
         DisplayScoreAndRank(
           key: numberOfMovesAndTilesLeftKey,
-          score: serverState.playerScore,
+          score: state.numberOfCorrectTiles,
           rank: serverState.playerRank,
         ),
         const ResponsiveGap(
