@@ -98,6 +98,8 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
     final puzzleIncomplete =
         context.select((PuzzleBloc bloc) => bloc.state.puzzleStatus) ==
             PuzzleStatus.incomplete;
+    final currentRound =
+        context.select((ServerSyncBloc bloc) => bloc.state.currentRound);
 
     final movementDuration = status == SlideIslandPuzzleStatus.loading
         ? const Duration(milliseconds: 800)
@@ -156,7 +158,7 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
                       }
                     : null,
                 icon: Image.asset(
-                  theme.dashAssetForTile(widget.tile),
+                  theme.dashAssetForTile(currentRound, widget.tile),
                   semanticLabel: context.l10n.puzzleTileLabelText(
                     widget.tile.value.toString(),
                     widget.tile.currentPosition.x.toString(),

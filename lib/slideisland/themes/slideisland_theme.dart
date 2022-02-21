@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 
 /// {@template slideisland_theme}
@@ -81,8 +83,11 @@ abstract class SlideIslandTheme extends PuzzleTheme {
   /// 13  14  15
   ///
   /// The dash asset for the i-th tile may be found in the file i.png.
-  String dashAssetForTile(Tile tile) =>
-      p.join(dashAssetsDirectory, '${tile.value.toString()}.png');
+  String dashAssetForTile(int currentRound, Tile tile) =>
+      p.join(dashAssetsDirectory, '$currentRound-${tile.value.toString()}.png');
+
+  String assetForRoundComplete(int currentRound) =>
+      p.join(dashAssetsDirectory, '$currentRound-complete.png');
 
   @override
   List<Object?> get props => [

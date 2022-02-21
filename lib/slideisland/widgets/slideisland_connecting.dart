@@ -11,14 +11,15 @@ class SlideIslandConnecting extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Stack(
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Connecting to server',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            CircularProgressIndicator(),
+            const CircularProgressIndicator(),
+            Image.asset('/images/slideisland/main-screen.png'),
           ],
         );
       },

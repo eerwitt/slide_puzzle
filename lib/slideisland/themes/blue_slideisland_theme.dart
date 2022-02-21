@@ -15,7 +15,7 @@ class BlueSlideIslandTheme extends SlideIslandTheme {
       context.l10n.slideislandBlueDashLabelText;
 
   @override
-  Color get backgroundColor => PuzzleColors.bluePrimary;
+  Color get backgroundColor => PuzzleColors.white;
 
   @override
   Color get defaultColor => PuzzleColors.blue90;

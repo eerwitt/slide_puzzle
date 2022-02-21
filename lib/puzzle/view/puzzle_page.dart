@@ -13,8 +13,10 @@ import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/simple/simple.dart';
 import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_connecting.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_gameover.dart';
 import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_lobby.dart';
 import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_lost.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_pregame.dart';
 import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_winner.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
@@ -47,8 +49,6 @@ class PuzzlePage extends StatelessWidget {
           create: (_) => SlideIslandThemeBloc(
             themes: const [
               BlueSlideIslandTheme(),
-              GreenSlideIslandTheme(),
-              YellowSlideIslandTheme()
             ],
           ),
         ),
@@ -173,6 +173,8 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         final playerState =
             context.select((ServerSyncBloc bloc) => bloc.state.playerState);
+        final gameState =
+            context.select((ServerSyncBloc bloc) => bloc.state.gameState);
 
         return Stack(
           children: [
@@ -190,7 +192,8 @@ class _Puzzle extends StatelessWidget {
                       const SlideIslandConnecting(
                         key: Key('slide_island_connecting'),
                       )
-                    else if (playerState == PlayerState.Won)
+                    else if (playerState == PlayerState.Won &&
+                        gameState != GameState.GameOver)
                       const SlideIslandWinner(key: Key('slide_island_winner'))
                     else if (playerState == PlayerState.Lost)
                       const SlideIslandLost(key: Key('slide_island_lost'))
@@ -310,6 +313,10 @@ class PuzzleSections extends StatelessWidget {
           // const PuzzleMenu(),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else if (serverState.gameState == GameState.PreGame)
+            const SlideIslandPreGame(key: Key('slide_island_pregame'))
+          else if (serverState.gameState == GameState.GameOver)
+            const SlideIslandGameOver(key: Key('slide_island_gameover'))
           else
             const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
@@ -320,6 +327,10 @@ class PuzzleSections extends StatelessWidget {
           theme.layoutDelegate.startSectionBuilder(state),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else if (serverState.gameState == GameState.PreGame)
+            const SlideIslandPreGame(key: Key('slide_island_pregame'))
+          else if (serverState.gameState == GameState.GameOver)
+            const SlideIslandGameOver(key: Key('slide_island_gameover'))
           else
             const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
@@ -333,6 +344,10 @@ class PuzzleSections extends StatelessWidget {
           ),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
+          else if (serverState.gameState == GameState.PreGame)
+            const SlideIslandPreGame(key: Key('slide_island_pregame'))
+          else if (serverState.gameState == GameState.GameOver)
+            const SlideIslandGameOver(key: Key('slide_island_gameover'))
           else
             const PuzzleBoard(),
           Expanded(

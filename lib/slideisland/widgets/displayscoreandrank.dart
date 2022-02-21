@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
@@ -23,9 +24,8 @@ class DisplayScoreAndRank extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final l10n = context.l10n;
-    final textColor = color ?? theme.defaultColor;
+    const textColor = PuzzleColors.black;
 
     return ResponsiveLayoutBuilder(
       small: (context, child) => Center(child: child),

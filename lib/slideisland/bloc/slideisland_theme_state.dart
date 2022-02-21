@@ -5,7 +5,7 @@ part of 'slideisland_theme_bloc.dart';
 class SlideIslandThemeState extends Equatable {
   const SlideIslandThemeState({
     required this.themes,
-    this.theme = const GreenSlideIslandTheme(),
+    this.theme = const BlueSlideIslandTheme(),
   });
 
   /// The list of all available [SlideIslandTheme]s.

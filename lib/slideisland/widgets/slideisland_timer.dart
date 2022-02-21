@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:rive/rive.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
@@ -61,9 +62,16 @@ class SlideIslandTimer extends StatelessWidget {
           key: const Key('slideisland_timer'),
           mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'assets/images/timer_icon.png',
+              key: const Key('slideisland_timer_icon'),
+              width: currentIconSize.width,
+              height: currentIconSize.height,
+            ),
+            Gap(iconPadding ?? 8),
             AnimatedDefaultTextStyle(
               style: currentTextStyle.copyWith(
-                color: PuzzleColors.white,
+                color: PuzzleColors.black,
               ),
               duration: PuzzleThemeAnimationDuration.textStyle,
               child: Text(
@@ -72,13 +80,14 @@ class SlideIslandTimer extends StatelessWidget {
                 semanticsLabel: _getDurationLabel(timeRemaining, context),
               ),
             ),
-            Gap(iconPadding ?? 8),
-            Image.asset(
-              'assets/images/timer_icon.png',
-              key: const Key('slideisland_timer_icon'),
-              width: currentIconSize.width,
-              height: currentIconSize.height,
-            ),
+            // const SizedBox(
+            //   width: 100,
+            //   height: 100,
+            //   child: RiveAnimation.asset(
+            //     'animations/timer_icon.riv',
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
           ],
         );
       },

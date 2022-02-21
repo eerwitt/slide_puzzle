@@ -3,16 +3,31 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 
 abstract class _BoardSize {
-  static double small = 312;
-  static double medium = 424;
-  static double large = 472;
+  static Map<int, double> small = {
+    1: 324,
+    2: 424,
+    3: 600,
+  };
+
+  static Map<int, double> medium = {
+    1: 424,
+    2: 474,
+    3: 600,
+  };
+
+  static Map<int, double> large = {
+    1: 474,
+    2: 500,
+    3: 600,
+  };
 }
 
 /// {@template slideisland_puzzle_board}
@@ -43,6 +58,8 @@ class _SlideIslandPuzzleBoardState extends State<SlideIslandPuzzleBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final currentRound =
+        context.select((ServerSyncBloc bloc) => bloc.state.currentRound);
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) async {
         if (state.puzzleStatus == PuzzleStatus.complete) {
@@ -74,17 +91,17 @@ class _SlideIslandPuzzleBoardState extends State<SlideIslandPuzzleBoard> {
       child: ResponsiveLayoutBuilder(
         small: (_, child) => SizedBox.square(
           key: const Key('slideisland_puzzle_board_small'),
-          dimension: _BoardSize.small,
+          dimension: _BoardSize.small[currentRound],
           child: child,
         ),
         medium: (_, child) => SizedBox.square(
           key: const Key('slideisland_puzzle_board_medium'),
-          dimension: _BoardSize.medium,
+          dimension: _BoardSize.medium[currentRound],
           child: child,
         ),
         large: (_, child) => SizedBox.square(
           key: const Key('slideisland_puzzle_board_large'),
-          dimension: _BoardSize.large,
+          dimension: _BoardSize.large[currentRound],
           child: child,
         ),
         child: (_) => Stack(children: widget.tiles),

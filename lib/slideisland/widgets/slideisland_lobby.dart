@@ -21,6 +21,7 @@ class SlideIslandLobby extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
+            Image.asset('/images/slideisland/main-screen.png'),
           ],
         );
       },

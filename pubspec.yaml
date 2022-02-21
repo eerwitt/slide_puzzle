@@ -28,6 +28,7 @@ dependencies:
   just_audio: ^0.9.18
   universal_platform: ^1.0.0+1
   url_launcher: ^6.0.17
+  rive: ^0.8.1
 
 dev_dependencies:
   bloc_test: ^9.0.1
@@ -50,9 +51,7 @@ flutter:
     - assets/images/dashatar/yellow/
     - assets/images/slideisland/gallery/
     - assets/images/slideisland/success/
-    - assets/images/slideisland/green/
     - assets/images/slideisland/blue/
-    - assets/images/slideisland/yellow/
   fonts:
     - family: GoogleSans
       fonts:

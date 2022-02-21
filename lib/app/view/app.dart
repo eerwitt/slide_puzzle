@@ -134,6 +134,10 @@ class _AppState extends State<App> {
         Image.asset('assets/images/facebook_icon.png').image,
         context,
       );
+      precacheImage(
+        Image.asset('/images/slideisland/main-screen.png').image,
+        context,
+      );
 
       for (final audioControlAsset in audioControlAssets) {
         precacheImage(
