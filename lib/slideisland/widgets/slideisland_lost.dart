@@ -31,7 +31,7 @@ class SlideIslandLost extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        Image.asset('/images/slideisland/lost.png'),
+        Image.asset('assets/images/slideisland/lost.png'),
       ],
     );
   }

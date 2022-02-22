@@ -19,7 +19,7 @@ class SlideIslandConnecting extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const CircularProgressIndicator(),
-            Image.asset('/images/slideisland/main-screen.png'),
+            Image.asset('assets/images/slideisland/main-screen.png'),
           ],
         );
       },

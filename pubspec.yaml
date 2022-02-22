@@ -51,6 +51,7 @@ flutter:
     - assets/images/slideisland/gallery/
     - assets/images/slideisland/success/
     - assets/images/slideisland/blue/
+    - assets/images/slideisland/
   fonts:
     - family: GoogleSans
       fonts:

@@ -33,7 +33,7 @@ class SlideIslandWinner extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        Image.asset('/images/slideisland/win.png'),
+        Image.asset('assets/images/slideisland/win.png'),
       ],
     );
   }

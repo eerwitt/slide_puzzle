@@ -135,7 +135,7 @@ class _AppState extends State<App> {
         context,
       );
       precacheImage(
-        Image.asset('/images/slideisland/main-screen.png').image,
+        Image.asset('assets/images/slideisland/main-screen.png').image,
         context,
       );
 
