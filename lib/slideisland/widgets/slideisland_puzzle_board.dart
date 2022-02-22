@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 
 abstract class _BoardSize {
-  static Map<int, double> small = {
-    1: 324,
-    2: 424,
-    3: 600,
-  };
-
-  static Map<int, double> medium = {
-    1: 424,
-    2: 474,
-    3: 600,
-  };
-
-  static Map<int, double> large = {
-    1: 474,
-    2: 500,
-    3: 600,
-  };
+  static double small = 300;
+  static double medium = 400;
+  static double large = 500;
 }
 
 /// {@template slideisland_puzzle_board}
@@ -43,23 +27,20 @@ class SlideIslandPuzzleBoard extends StatefulWidget {
 class _SlideIslandPuzzleBoardState extends State<SlideIslandPuzzleBoard> {
   @override
   Widget build(BuildContext context) {
-    final currentRound =
-        context.select((ServerSyncBloc bloc) => bloc.state.currentRound);
-
     return ResponsiveLayoutBuilder(
       small: (_, child) => SizedBox.square(
         key: const Key('slideisland_puzzle_board_small'),
-        dimension: _BoardSize.small[currentRound],
+        dimension: _BoardSize.small,
         child: child,
       ),
       medium: (_, child) => SizedBox.square(
         key: const Key('slideisland_puzzle_board_medium'),
-        dimension: _BoardSize.medium[currentRound],
+        dimension: _BoardSize.medium,
         child: child,
       ),
       large: (_, child) => SizedBox.square(
         key: const Key('slideisland_puzzle_board_large'),
-        dimension: _BoardSize.large[currentRound],
+        dimension: _BoardSize.large,
         child: child,
       ),
       child: (_) => Stack(children: widget.tiles),

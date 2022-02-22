@@ -11,9 +11,9 @@ class SlideIslandWinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return TextButton(
+    return Column(
+      children: [
+        TextButton(
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,
           ).copyWith(
@@ -32,8 +32,9 @@ class SlideIslandWinner extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-        );
-      },
+        ),
+        Image.asset('/images/slideisland/win.png'),
+      ],
     );
   }
 }

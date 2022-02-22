@@ -11,25 +11,28 @@ class SlideIslandLost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return TextButton(
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-        ).copyWith(
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
+    return Column(
+      children: [
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+          ).copyWith(
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+          ),
+          onPressed: () {
+            context.read<ServerSyncBloc>().add(const ConnectToServerEvent(
+                  'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
+                ));
+          },
+          child: const Text(
+            'You Lost :(',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        onPressed: () {
-          context.read<ServerSyncBloc>().add(const ConnectToServerEvent(
-                'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
-              ));
-        },
-        child: const Text(
-          'You Lost :(',
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      );
-    });
+        Image.asset('/images/slideisland/lost.png'),
+      ],
+    );
   }
 }

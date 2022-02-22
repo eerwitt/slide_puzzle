@@ -23,7 +23,7 @@ abstract class SlideIslandTheme extends PuzzleTheme {
       'assets/images/audio_control/slideisland_on.png';
 
   @override
-  bool get hasTimer => true;
+  bool get hasTimer => false;
 
   @override
   Color get nameColor => PuzzleColors.black;
