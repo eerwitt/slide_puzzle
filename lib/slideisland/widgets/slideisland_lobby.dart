@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_event.dart';
 
 /// View for when we're doing server connections
 class SlideIslandLobby extends StatelessWidget {
@@ -11,6 +12,7 @@ class SlideIslandLobby extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final playerState = context.select((ServerSyncBloc bloc) => bloc.state);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Stack(
@@ -22,6 +24,17 @@ class SlideIslandLobby extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Image.asset('/images/slideisland/main-screen.png'),
+            TextButton(
+              onPressed: () => context
+                  .read<ServerSyncBloc>()
+                  .add(const ForceMatchReadyEvent()),
+              child: const Text(
+                'Start Match',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.visible,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
         );
       },

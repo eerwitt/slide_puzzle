@@ -4,20 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/theme/themes/themes.dart';
-
-abstract class _TileSize {
-  static double small = 75;
-  static double medium = 100;
-  static double large = 112;
-}
 
 /// {@template slideisland_puzzle_tile}
 /// Displays the puzzle tile associated with [tile]
@@ -102,8 +96,8 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
         context.select((ServerSyncBloc bloc) => bloc.state.currentRound);
 
     final movementDuration = status == SlideIslandPuzzleStatus.loading
-        ? const Duration(milliseconds: 800)
-        : const Duration(milliseconds: 370);
+        ? const Duration(milliseconds: 1)
+        : const Duration(milliseconds: 10);
 
     final canPress = hasStarted && puzzleIncomplete;
 
@@ -116,23 +110,11 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
         ),
         duration: movementDuration,
         curve: Curves.easeInOut,
-        child: ResponsiveLayoutBuilder(
-          small: (_, child) => SizedBox.square(
-            key: Key('slideisland_puzzle_tile_small_${widget.tile.value}'),
-            dimension: _TileSize.small,
-            child: child,
-          ),
-          medium: (_, child) => SizedBox.square(
-            key: Key('slideisland_puzzle_tile_medium_${widget.tile.value}'),
-            dimension: _TileSize.medium,
-            child: child,
-          ),
-          large: (_, child) => SizedBox.square(
-            key: Key('slideisland_puzzle_tile_large_${widget.tile.value}'),
-            dimension: _TileSize.large,
-            child: child,
-          ),
-          child: (_) => MouseRegion(
+        child: FractionallySizedBox(
+          widthFactor: 1 / size,
+          heightFactor: 1 / size,
+          key: Key('slideisland_puzzle_tile_medium_${widget.tile.value}'),
+          child: MouseRegion(
             onEnter: (_) {
               if (canPress) {
                 _controller.forward();

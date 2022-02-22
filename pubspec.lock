@@ -203,13 +203,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  graphs:
-    dependency: transitive
-    description:
-      name: graphs
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.0"
   http:
     dependency: transitive
     description:
@@ -441,13 +434,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  rive:
-    dependency: "direct main"
-    description:
-      name: rive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.1"
   rxdart:
     dependency: transitive
     description:
@@ -493,7 +479,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "5cb43e0bdd9333504390789e1f8e52cc3053884e"
+      resolved-ref: e12fd6f6ad1c62fa2efc2049c7b1311ced41c326
       url: "https://github.com/eerwitt/slide_puzzle_shared.git"
     source: git
     version: "0.0.1"

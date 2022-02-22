@@ -26,10 +26,10 @@ abstract class SlideIslandTheme extends PuzzleTheme {
   bool get hasTimer => true;
 
   @override
-  Color get nameColor => PuzzleColors.white;
+  Color get nameColor => PuzzleColors.black;
 
   @override
-  Color get titleColor => PuzzleColors.white;
+  Color get titleColor => PuzzleColors.black;
 
   @override
   Color get hoverColor => PuzzleColors.black2;
@@ -38,13 +38,13 @@ abstract class SlideIslandTheme extends PuzzleTheme {
   Color get pressedColor => PuzzleColors.white2;
 
   @override
-  bool get isLogoColored => false;
+  bool get isLogoColored => true;
 
   @override
   Color get menuActiveColor => PuzzleColors.white;
 
   @override
-  Color get menuUnderlineColor => PuzzleColors.white;
+  Color get menuUnderlineColor => PuzzleColors.grey1;
 
   @override
   PuzzleLayoutDelegate get layoutDelegate =>

@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:equatable/equatable.dart';
-
 import 'package:slide_puzzle_shared/bloc/puzzle_bloc.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -30,6 +28,13 @@ class DisconnectFromServerEvent extends ServerSyncEvent {
 
 class FindMatchEvent extends ServerSyncEvent {
   const FindMatchEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class ForceMatchReadyEvent extends ServerSyncEvent {
+  const ForceMatchReadyEvent();
 
   @override
   List<Object> get props => [];

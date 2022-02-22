@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:very_good_slide_puzzle/audio_control/audio_control.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/timer/timer.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
@@ -63,12 +62,6 @@ class _SlideIslandCountdownState extends State<SlideIslandCountdown> {
           // Start the puzzle timer when the countdown finishes.
           if (state.status == SlideIslandPuzzleStatus.started) {
             context.read<TimerBloc>().add(const TimerStarted());
-          }
-
-          // Shuffle the puzzle on every countdown tick.
-          if (state.secondsToBegin >= 1 && state.secondsToBegin <= 3) {
-            context.read<PuzzleBloc>().add(const PuzzleSetup(
-                randomSeed: 123, size: 4, shufflePuzzle: true));
           }
         },
         child: ResponsiveLayoutBuilder(

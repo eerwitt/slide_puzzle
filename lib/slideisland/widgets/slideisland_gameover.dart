@@ -18,9 +18,9 @@ class SlideIslandGameOver extends StatelessWidget {
         overlayColor: MaterialStateProperty.all(Colors.transparent),
       ),
       onPressed: () {
-        context
-            .read<ServerSyncBloc>()
-            .add(const ConnectToServerEvent('connectur'));
+        context.read<ServerSyncBloc>().add(const ConnectToServerEvent(
+              'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
+            ));
       },
       child: const Text(
         'Game over',

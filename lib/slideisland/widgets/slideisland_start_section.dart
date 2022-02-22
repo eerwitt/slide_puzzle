@@ -28,15 +28,9 @@ class SlideIslandStartSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ResponsiveGap(
-          small: 20,
-          medium: 83,
-          large: 151,
-        ),
         PuzzleName(
           key: puzzleNameKey,
         ),
-        const ResponsiveGap(large: 16),
         PuzzleTitle(
           key: puzzleTitleKey,
           title: context.l10n.puzzleChallengeTitle,
@@ -57,17 +51,10 @@ class SlideIslandStartSection extends StatelessWidget {
           large: 32,
         ),
         ResponsiveLayoutBuilder(
-          small: (_, __) => const SizedBox(),
-          medium: (_, __) => const SizedBox(),
-          large: (_, __) =>
-              const SizedBox(), /* const SlideIslandPuzzleActionButton(),*/
-        ),
-        ResponsiveLayoutBuilder(
           small: (_, __) => const SlideIslandTimer(),
           medium: (_, __) => const SlideIslandTimer(),
           large: (_, __) => const SizedBox(),
         ),
-        const ResponsiveGap(small: 12),
       ],
     );
   }

@@ -28,6 +28,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
     on<DisconnectFromServerEvent>(_onDisconnectFromServer);
     on<TileTapped>(_onPuzzleTileTapped);
     on<MessageReceivedEvent>(_onMessageReceived);
+    on<ForceMatchReadyEvent>(_onForceMatchReady);
   }
 
   WebSocketChannel? channel;
@@ -122,6 +123,20 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
         break;
       case MessageType.HealthCheck:
         break;
+      case MessageType.StartMatch:
+        break;
     }
+  }
+
+  void _onForceMatchReady(
+      ForceMatchReadyEvent event, Emitter<ServerSyncState> emit) {
+    final message = BaseMessage(
+      id: state.messageId,
+      messageType: MessageType.StartMatch,
+      payload: <String, dynamic>{},
+      valid: true,
+    );
+
+    channel?.sink.add(message.toRawJson());
   }
 }

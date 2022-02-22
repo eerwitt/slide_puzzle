@@ -19,16 +19,15 @@ dependencies:
   gap: ^2.0.0
   google_fonts: ^2.1.0
   intl: ^0.17.0
+  just_audio: ^0.9.18
   # Requirements for server communication
   slide_puzzle_shared:
     git:
       url: https://github.com/eerwitt/slide_puzzle_shared.git
       ref: main
-  web_socket_channel: ^2.1.0
-  just_audio: ^0.9.18
   universal_platform: ^1.0.0+1
   url_launcher: ^6.0.17
-  rive: ^0.8.1
+  web_socket_channel: ^2.1.0
 
 dev_dependencies:
   bloc_test: ^9.0.1

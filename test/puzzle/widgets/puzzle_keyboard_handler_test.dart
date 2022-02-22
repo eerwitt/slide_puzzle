@@ -67,9 +67,6 @@ void main() {
         'with offset (0, -1) '
         'and plays the tile_move sound '
         'when arrow down is pressed', (tester) async {
-      when(() => puzzle.getTileRelativeToWhitespaceTile(Offset(0, -1)))
-          .thenReturn(tile);
-
       await tester.pumpApp(
         PuzzleKeyboardHandler(
           child: SizedBox(),
@@ -86,9 +83,6 @@ void main() {
         physicalKey: PhysicalKeyboardKey.arrowDown,
       );
 
-      verify(() => puzzle.getTileRelativeToWhitespaceTile(Offset(0, -1)))
-          .called(1);
-
       verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
 
       verify(() => audioPlayer.setAsset('assets/audio/tile_move.mp3'))
@@ -101,9 +95,6 @@ void main() {
         'with offset (0, 1) '
         'and plays the tile_move sound '
         'when arrow up is pressed', (tester) async {
-      when(() => puzzle.getTileRelativeToWhitespaceTile(Offset(0, 1)))
-          .thenReturn(tile);
-
       await tester.pumpApp(
         PuzzleKeyboardHandler(
           child: SizedBox(),
@@ -120,9 +111,6 @@ void main() {
         physicalKey: PhysicalKeyboardKey.arrowUp,
       );
 
-      verify(() => puzzle.getTileRelativeToWhitespaceTile(Offset(0, 1)))
-          .called(1);
-
       verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
 
       verify(() => audioPlayer.setAsset('assets/audio/tile_move.mp3'))
@@ -135,9 +123,6 @@ void main() {
         'with offset (-1, 0) '
         'and plays the tile_move sound '
         'when arrow right is pressed', (tester) async {
-      when(() => puzzle.getTileRelativeToWhitespaceTile(Offset(-1, 0)))
-          .thenReturn(tile);
-
       await tester.pumpApp(
         PuzzleKeyboardHandler(
           child: SizedBox(),
@@ -154,9 +139,6 @@ void main() {
         physicalKey: PhysicalKeyboardKey.arrowRight,
       );
 
-      verify(() => puzzle.getTileRelativeToWhitespaceTile(Offset(-1, 0)))
-          .called(1);
-
       verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
 
       verify(() => audioPlayer.setAsset('assets/audio/tile_move.mp3'))
@@ -169,9 +151,6 @@ void main() {
         'with offset (1, 0) '
         'and plays the tile_move sound '
         'when arrow left is pressed', (tester) async {
-      when(() => puzzle.getTileRelativeToWhitespaceTile(Offset(1, 0)))
-          .thenReturn(tile);
-
       await tester.pumpApp(
         PuzzleKeyboardHandler(
           child: SizedBox(),
@@ -187,9 +166,6 @@ void main() {
         LogicalKeyboardKey.arrowLeft,
         physicalKey: PhysicalKeyboardKey.arrowLeft,
       );
-
-      verify(() => puzzle.getTileRelativeToWhitespaceTile(Offset(1, 0)))
-          .called(1);
 
       verify(() => puzzleBloc.add(TileTapped(tile))).called(1);
 
@@ -222,7 +198,6 @@ void main() {
         physicalKey: PhysicalKeyboardKey.arrowLeft,
       );
 
-      verifyNever(() => puzzle.getTileRelativeToWhitespaceTile(Offset(1, 0)));
       verifyNever(() => puzzleBloc.add(TileTapped(tile)));
     });
 

@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "puzzleChallengeTitle": "Slide Islands Royal",
+    "puzzleChallengeTitle": "Slide Island Royal",
     "puzzleChangeTooltip": "Changing the theme will reset your score",
     "@puzzleChangeTooltip": {
         "description": "Shown as a tooltip for puzzle menu buttons"

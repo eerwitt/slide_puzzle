@@ -1,5 +1,4 @@
 export 'slideisland_countdown.dart';
-export 'slideisland_puzzle_action_button.dart';
 export 'slideisland_puzzle_board.dart';
 export 'slideisland_puzzle_tile.dart';
 export 'slideisland_score.dart';

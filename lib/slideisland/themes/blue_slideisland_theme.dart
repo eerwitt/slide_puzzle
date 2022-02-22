@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
-import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
+import 'package:very_good_slide_puzzle/slideisland/slideisland.dart';
 
 /// {@template blue_slideisland_theme}
 /// The blue slideisland puzzle theme.

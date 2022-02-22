@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/slideisland/themes/slideisland_theme.dart';
 import 'package:very_good_slide_puzzle/theme/bloc/theme_bloc.dart';

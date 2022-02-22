@@ -181,7 +181,7 @@ class _AppState extends State<App> {
           accentColor: const Color(0xFF13B9FF),
         ),
       ),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
       ],
