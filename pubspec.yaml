@@ -48,10 +48,10 @@ flutter:
     - assets/images/dashatar/green/
     - assets/images/dashatar/blue/
     - assets/images/dashatar/yellow/
+    - assets/images/slideisland/
     - assets/images/slideisland/gallery/
     - assets/images/slideisland/success/
     - assets/images/slideisland/blue/
-    - assets/images/slideisland/
   fonts:
     - family: GoogleSans
       fonts:
