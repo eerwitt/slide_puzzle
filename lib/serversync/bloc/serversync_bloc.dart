@@ -15,6 +15,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
           const ServerSyncState(
             messageId: 1,
             playerRank: 1,
+            playersToMoveOn: 1,
             playerScore: 0,
             currentRound: 1,
             gameState: GameState.GameOver,
@@ -118,6 +119,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
         emit(state.copyWith(
           playerRank: roundUpdate.playerRank,
           playerScore: roundUpdate.currentScore,
+          playersToMoveOn: roundUpdate.playersToMoveOn,
         ));
 
         break;

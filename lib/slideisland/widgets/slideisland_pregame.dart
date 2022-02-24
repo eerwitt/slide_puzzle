@@ -19,7 +19,7 @@ class SlideIslandPreGame extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Stack(
+        return Column(
           children: [
             const Text(
               'Preparing game',
@@ -30,6 +30,8 @@ class SlideIslandPreGame extends StatelessWidget {
             Image.asset(
               theme.assetForRoundComplete(currentRound),
               semanticLabel: 'Round Complete Test',
+              fit: BoxFit.fill,
+              width: 1080,
             ),
           ],
         );

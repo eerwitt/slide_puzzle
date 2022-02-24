@@ -138,12 +138,18 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
                         unawaited(_audioPlayer?.replay());
                       }
                     : null,
-                icon: Image.asset(
-                  theme.dashAssetForTile(currentRound, widget.tile),
-                  semanticLabel: context.l10n.puzzleTileLabelText(
-                    widget.tile.value.toString(),
-                    widget.tile.currentPosition.x.toString(),
-                    widget.tile.currentPosition.y.toString(),
+                icon: ClipRRect(
+                  borderRadius: BorderRadius.circular(17),
+                  child: Container(
+                    color: const Color(0xFFFFFFFF),
+                    child: Image.asset(
+                      theme.dashAssetForTile(currentRound, widget.tile),
+                      semanticLabel: context.l10n.puzzleTileLabelText(
+                        widget.tile.value.toString(),
+                        widget.tile.currentPosition.x.toString(),
+                        widget.tile.currentPosition.y.toString(),
+                      ),
+                    ),
                   ),
                 ),
               ),

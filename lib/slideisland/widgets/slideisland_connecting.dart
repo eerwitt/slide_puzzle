@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:very_good_slide_puzzle/theme/widgets/puzzle_name.dart';
+import 'package:very_good_slide_puzzle/theme/widgets/puzzle_title.dart';
 
 /// View for when we're doing server connections
 class SlideIslandConnecting extends StatelessWidget {
@@ -10,16 +12,19 @@ class SlideIslandConnecting extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Stack(
-          children: [
-            const Text(
+        return Column(
+          children: const [
+            PuzzleName(),
+            PuzzleTitle(
+              title: 'Slide Island Royal',
+            ),
+            Text(
               'Connecting to server',
               textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
+              overflow: TextOverflow.visible,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const CircularProgressIndicator(),
-            Image.asset('assets/images/slideisland/main-screen.png'),
+            CircularProgressIndicator(),
           ],
         );
       },

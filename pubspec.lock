@@ -479,7 +479,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: e12fd6f6ad1c62fa2efc2049c7b1311ced41c326
+      resolved-ref: "7ebceaefcc43e22fe52ba2ace40fd9c7faf6e1b1"
       url: "https://github.com/eerwitt/slide_puzzle_shared.git"
     source: git
     version: "0.0.1"

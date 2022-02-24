@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_rank.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
@@ -81,6 +82,7 @@ class DisplayScoreAndRank extends StatelessWidget {
                   duration: PuzzleThemeAnimationDuration.textStyle,
                   child: Text(' ${l10n.puzzleRank}'),
                 ),
+                const SlideIslandPlayerPosition(),
               ],
             ),
           ),

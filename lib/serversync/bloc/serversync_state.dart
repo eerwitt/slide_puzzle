@@ -7,6 +7,7 @@ class ServerSyncState extends Equatable {
   const ServerSyncState({
     required this.messageId,
     required this.playerRank,
+    required this.playersToMoveOn,
     required this.playerScore,
     required this.secondsRemaining,
     required this.playersConnected,
@@ -18,6 +19,7 @@ class ServerSyncState extends Equatable {
 
   final int messageId;
   final int playerRank;
+  final int playersToMoveOn;
   final int playerScore;
   final int secondsRemaining;
   final int playersConnected;
@@ -30,6 +32,7 @@ class ServerSyncState extends Equatable {
   List<Object> get props => [
         messageId,
         playerRank,
+        playersToMoveOn,
         playerScore,
         secondsRemaining,
         playersConnected,
@@ -42,6 +45,7 @@ class ServerSyncState extends Equatable {
   ServerSyncState copyWith(
       {int? messageId,
       int? playerRank,
+      int? playersToMoveOn,
       int? playerScore,
       int? secondsRemaining,
       int? playersConnected,
@@ -52,6 +56,7 @@ class ServerSyncState extends Equatable {
     return ServerSyncState(
       messageId: messageId ?? this.messageId,
       playerRank: playerRank ?? this.playerRank,
+      playersToMoveOn: playersToMoveOn ?? this.playersToMoveOn,
       playerScore: playerScore ?? this.playerScore,
       secondsRemaining: secondsRemaining ?? this.secondsRemaining,
       playersConnected: playersConnected ?? this.playersConnected,
