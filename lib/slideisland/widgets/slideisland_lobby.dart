@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_bloc.dart';
 import 'package:very_good_slide_puzzle/serversync/bloc/serversync_event.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/display_slide.dart';
+import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_timer.dart';
 
 class SlideIslandLobby extends StatefulWidget {
   const SlideIslandLobby({Key? key}) : super(key: key);
@@ -30,17 +32,32 @@ class _SlideIslandLobbyState extends State<SlideIslandLobby> {
       builder: (context, constraints) {
         return Column(
           children: [
+            const Text(
+              'Act fast, slide tiles into place faster than anyone else to proceed to the next round!',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            DisplaySlideWidget(
+              child: Image.asset(
+                'assets/images/slideisland/main-screen.png',
+                height: 400,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
             Text(
-              'In Lobby, Waiting for players ${playerState.playersConnected} / 100',
+              'Waiting for more players (${playerState.playersConnected} / 100).',
               textAlign: TextAlign.center,
               overflow: TextOverflow.visible,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            Image.asset(
-              'assets/images/slideisland/main-screen.png',
-              height: 600,
-              fit: BoxFit.fitHeight,
+            const Text(
+              'Automatically starting match in:',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            const SlideIslandTimer(),
             ElevatedButton(
               onPressed: !forceReadyPushed
                   ? () {
@@ -51,7 +68,7 @@ class _SlideIslandLobbyState extends State<SlideIslandLobby> {
                     }
                   : null,
               child: const Text(
-                'Start Match',
+                'Start Match Early',
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.visible,
                 style: TextStyle(fontWeight: FontWeight.bold),

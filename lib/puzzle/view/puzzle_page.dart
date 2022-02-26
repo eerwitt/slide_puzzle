@@ -295,44 +295,46 @@ class PuzzleSections extends StatelessWidget {
     return ResponsiveLayoutBuilder(
       small: (context, child) => Column(
         children: [
-          theme.layoutDelegate.startSectionBuilder(state),
-          // const PuzzleMenu(),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
           else if (serverState.gameState == GameState.PreGame)
             const SlideIslandPreGame(key: Key('slide_island_pregame'))
-          else
+          else ...[
+            theme.layoutDelegate.startSectionBuilder(state),
             const PuzzleBoard(),
-          theme.layoutDelegate.endSectionBuilder(state),
+            theme.layoutDelegate.endSectionBuilder(state),
+          ],
         ],
       ),
       medium: (context, child) => Column(
         children: [
-          theme.layoutDelegate.startSectionBuilder(state),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
           else if (serverState.gameState == GameState.PreGame)
             const SlideIslandPreGame(key: Key('slide_island_pregame'))
-          else
+          else ...[
+            theme.layoutDelegate.startSectionBuilder(state),
             const PuzzleBoard(),
-          theme.layoutDelegate.endSectionBuilder(state),
+            theme.layoutDelegate.endSectionBuilder(state),
+          ],
         ],
       ),
       large: (context, child) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: theme.layoutDelegate.startSectionBuilder(state),
-          ),
           if (serverState.gameState == GameState.Lobby)
             const SlideIslandLobby(key: Key('slide_island_lobby'))
           else if (serverState.gameState == GameState.PreGame)
             const SlideIslandPreGame(key: Key('slide_island_pregame'))
-          else
+          else ...[
+            Expanded(
+              child: theme.layoutDelegate.startSectionBuilder(state),
+            ),
             const PuzzleBoard(),
-          Expanded(
-            child: theme.layoutDelegate.endSectionBuilder(state),
-          ),
+            Expanded(
+              child: theme.layoutDelegate.endSectionBuilder(state),
+            ),
+          ],
         ],
       ),
     );
