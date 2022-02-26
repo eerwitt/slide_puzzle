@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -48,10 +50,13 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
   /// The controller that drives [_scale] animation.
   late AnimationController _controller;
   late Animation<double> _scale;
+  bool _hasEntered = false;
 
   @override
   void initState() {
     super.initState();
+
+    _hasEntered = false;
 
     _controller = AnimationController(
       vsync: this,
@@ -117,11 +122,13 @@ class SlideIslandPuzzleTileState extends State<SlideIslandPuzzleTile>
             onEnter: (_) {
               if (canPress) {
                 _controller.forward();
+                _hasEntered = true;
               }
             },
             onExit: (_) {
-              if (canPress) {
+              if (canPress || _hasEntered) {
                 _controller.reverse();
+                _hasEntered = false;
               }
             },
             child: ScaleTransition(

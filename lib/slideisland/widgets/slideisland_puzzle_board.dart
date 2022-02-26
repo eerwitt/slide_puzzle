@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:slide_puzzle_shared/bloc/puzzle_bloc.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
 
 abstract class _BoardSize {
@@ -27,6 +29,10 @@ class SlideIslandPuzzleBoard extends StatefulWidget {
 class _SlideIslandPuzzleBoardState extends State<SlideIslandPuzzleBoard> {
   @override
   Widget build(BuildContext context) {
+    final puzzleComplete =
+        context.select((PuzzleBloc bloc) => bloc.state.puzzleStatus) ==
+            PuzzleStatus.complete;
+
     return ResponsiveLayoutBuilder(
       small: (_, child) => SizedBox.square(
         key: const Key('slideisland_puzzle_board_small'),
@@ -43,7 +49,14 @@ class _SlideIslandPuzzleBoardState extends State<SlideIslandPuzzleBoard> {
         dimension: _BoardSize.large,
         child: child,
       ),
-      child: (_) => Stack(children: widget.tiles),
+      child: (_) => Stack(
+        children: <Widget>[] +
+            widget.tiles +
+            [
+              if (puzzleComplete)
+                const Text('PUZZLE COMPLETE! Waiting for other players.'),
+            ],
+      ),
     );
   }
 }
