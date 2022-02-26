@@ -2,23 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-/*
-    return Container(
-      color: Colors.transparent,
-      child: Row(
-        children: <Widget>[
-          AnimatedProgressBar(
-            key: const Key('slide_island_progress_bar'),
-            animation: _progressAnimation,
-          ),
-          Expanded(
-            child: Container(
-              height: 6,
-              width: 100, // double.infinity,
-              decoration: const BoxDecoration(color: Colors.cyanAccent),
-            ),
-            */
-
 class AnimatedBar extends AnimatedWidget {
   const AnimatedBar({
     Key? key,
@@ -29,15 +12,38 @@ class AnimatedBar extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      width: _progress.value * 10,
-      decoration: const BoxDecoration(color: Colors.deepOrange),
+    const progressWidth = 400.0;
+    const progressHeight = 10.0;
+
+    return Stack(
+      children: [
+        // All Safe Players
+        Container(
+          height: progressHeight,
+          width: progressWidth,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(width: 0.5, color: Colors.black12),
+          ),
+        ),
+        // To cut
+        Container(
+          height: progressHeight,
+          width: progressWidth / 2,
+          decoration: const BoxDecoration(color: Colors.grey),
+        ),
+        // Player
+        Transform.translate(
+          offset:
+              Offset(progressWidth - (_progress.value * progressWidth / 10), 0),
+          child: Container(
+            height: progressHeight,
+            width: progressWidth / 100,
+            decoration: const BoxDecoration(color: Color(0xFFFFD700)),
+          ),
+        ),
+      ],
     );
-    /*return Transform.scale(
-        scale: _progress.value,
-        child: Container(width: 100, height: 100, color: Colors.lightGreen));
-        */
   }
 }
 

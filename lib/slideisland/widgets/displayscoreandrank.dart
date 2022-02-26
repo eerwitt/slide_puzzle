@@ -46,43 +46,55 @@ class DisplayScoreAndRank extends StatelessWidget {
             rank.toString(),
           ),
           child: ExcludeSemantics(
-            child: Row(
-              key: const Key('display_score_and_rank'),
-              mainAxisAlignment: mainAxisAlignment,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
+            child: Column(
               children: [
-                AnimatedDefaultTextStyle(
-                  key: const Key('display_score_and_rank_moves'),
-                  style: PuzzleTextStyle.headline4.copyWith(
-                    color: textColor,
-                  ),
-                  duration: PuzzleThemeAnimationDuration.textStyle,
-                  child: Text(score.toString()),
+                Row(
+                  key: const Key('display_score_and_rank'),
+                  mainAxisAlignment: mainAxisAlignment,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    AnimatedDefaultTextStyle(
+                      key: const Key('display_score_and_rank_moves'),
+                      style: PuzzleTextStyle.headline4.copyWith(
+                        color: textColor,
+                      ),
+                      duration: PuzzleThemeAnimationDuration.textStyle,
+                      child: Text(score.toString()),
+                    ),
+                    AnimatedDefaultTextStyle(
+                      style: bodyTextStyle.copyWith(
+                        color: textColor,
+                      ),
+                      duration: PuzzleThemeAnimationDuration.textStyle,
+                      child: Text(' ${l10n.puzzleScore} | '),
+                    ),
+                    AnimatedDefaultTextStyle(
+                      key: const Key('display_score_and_rank_tiles_left'),
+                      style: PuzzleTextStyle.headline4.copyWith(
+                        color: textColor,
+                      ),
+                      duration: PuzzleThemeAnimationDuration.textStyle,
+                      child: Text(rank.toString()),
+                    ),
+                    AnimatedDefaultTextStyle(
+                      style: bodyTextStyle.copyWith(
+                        color: textColor,
+                      ),
+                      duration: PuzzleThemeAnimationDuration.textStyle,
+                      child: Text(' ${l10n.puzzleRank}'),
+                    ),
+                  ],
                 ),
-                AnimatedDefaultTextStyle(
-                  style: bodyTextStyle.copyWith(
-                    color: textColor,
-                  ),
-                  duration: PuzzleThemeAnimationDuration.textStyle,
-                  child: Text(' ${l10n.puzzleScore} | '),
-                ),
-                AnimatedDefaultTextStyle(
-                  key: const Key('display_score_and_rank_tiles_left'),
-                  style: PuzzleTextStyle.headline4.copyWith(
-                    color: textColor,
-                  ),
-                  duration: PuzzleThemeAnimationDuration.textStyle,
-                  child: Text(rank.toString()),
-                ),
-                AnimatedDefaultTextStyle(
-                  style: bodyTextStyle.copyWith(
-                    color: textColor,
-                  ),
-                  duration: PuzzleThemeAnimationDuration.textStyle,
-                  child: Text(' ${l10n.puzzleRank}'),
-                ),
-                const SlideIslandPlayerPosition(),
+                Row(
+                  key: const Key('display_player_position'),
+                  mainAxisAlignment: mainAxisAlignment,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: const [
+                    SlideIslandPlayerPosition(),
+                  ],
+                )
               ],
             ),
           ),
