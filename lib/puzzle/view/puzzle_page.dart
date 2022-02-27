@@ -36,25 +36,10 @@ class PuzzlePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => DashatarThemeBloc(
-            themes: const [
-              BlueDashatarTheme(),
-              GreenDashatarTheme(),
-              YellowDashatarTheme()
-            ],
-          ),
-        ),
-        BlocProvider(
           create: (_) => SlideIslandThemeBloc(
             themes: const [
               BlueSlideIslandTheme(),
             ],
-          ),
-        ),
-        BlocProvider(
-          create: (_) => DashatarPuzzleBloc(
-            secondsToBegin: 3,
-            ticker: const Ticker(),
           ),
         ),
         BlocProvider(
@@ -68,11 +53,6 @@ class PuzzlePage extends StatelessWidget {
             initialThemes: [
               context.read<SlideIslandThemeBloc>().state.theme,
             ],
-          ),
-        ),
-        BlocProvider(
-          create: (_) => TimerBloc(
-            ticker: const Ticker(),
           ),
         ),
         BlocProvider(
@@ -96,59 +76,34 @@ class PuzzleView extends StatelessWidget {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
     return Scaffold(
-      body: AnimatedContainer(
-        duration: PuzzleThemeAnimationDuration.backgroundColorChange,
-        decoration: BoxDecoration(color: theme.backgroundColor),
-        child: MultiBlocListener(
-          listeners: [
-            BlocListener<DashatarThemeBloc, DashatarThemeState>(
-              listener: (context, state) {
-                final dashatarTheme =
-                    context.read<DashatarThemeBloc>().state.theme;
-                context
-                    .read<ThemeBloc>()
-                    .add(ThemeUpdated(theme: dashatarTheme));
-              },
-            ),
-            BlocListener<SlideIslandThemeBloc, SlideIslandThemeState>(
-              listener: (context, state) {
-                final slideislandTheme =
-                    context.read<SlideIslandThemeBloc>().state.theme;
-                context
-                    .read<ThemeBloc>()
-                    .add(ThemeUpdated(theme: slideislandTheme));
-              },
+      backgroundColor: theme.backgroundColor,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<SlideIslandThemeBloc, SlideIslandThemeState>(
+            listener: (context, state) {
+              final slideislandTheme =
+                  context.read<SlideIslandThemeBloc>().state.theme;
+              context
+                  .read<ThemeBloc>()
+                  .add(ThemeUpdated(theme: slideislandTheme));
+            },
+          ),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => PuzzleBloc()),
+            BlocProvider(
+              create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
+                ..add(
+                  const ConnectToServerEvent(
+                    /*'ws://127.0.0.1:8080/ws',*/
+                    'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
+                  ),
+                ),
             ),
           ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => TimerBloc(
-                  ticker: const Ticker(),
-                ),
-              ),
-              BlocProvider(create: (context) => PuzzleBloc()
-                  // ..add(
-                  //   PuzzleSetup(
-                  //     shufflePuzzle: shufflePuzzle,
-                  //     randomSeed: 123,
-                  //     size: 4,
-                  //   ),
-                  // ),
-                  ),
-              BlocProvider(
-                create: (context) => ServerSyncBloc(context.read<PuzzleBloc>())
-                  ..add(
-                    const ConnectToServerEvent(
-                      /*'ws://127.0.0.1:8080/ws',*/
-                      'wss://slide-puzzle-server-zle2slktuq-wl.a.run.app:443/ws',
-                    ),
-                  ),
-              ),
-            ],
-            child: const _Puzzle(
-              key: Key('puzzle_view_puzzle'),
-            ),
+          child: const _Puzzle(
+            key: Key('puzzle_view_puzzle'),
           ),
         ),
       ),
@@ -161,43 +116,29 @@ class _Puzzle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    final state = context.select((PuzzleBloc bloc) => bloc.state);
-
     return LayoutBuilder(
       builder: (context, constraints) {
         final playerState =
             context.select((ServerSyncBloc bloc) => bloc.state.playerState);
 
-        return Stack(
-          children: [
-            if (theme is SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
-            SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Column(
-                  children: [
-                    const PuzzleHeader(),
-                    if (playerState == PlayerState.Connecting)
-                      const SlideIslandConnecting(
-                        key: Key('slide_island_connecting'),
-                      )
-                    else if (playerState == PlayerState.Won)
-                      const SlideIslandWinner(key: Key('slide_island_winner'))
-                    else if (playerState == PlayerState.Lost)
-                      const SlideIslandLost(key: Key('slide_island_lost'))
-                    else
-                      const PuzzleSections(),
-                  ],
-                ),
-              ),
+        return Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const PuzzleHeader(),
+                if (playerState == PlayerState.Connecting)
+                  const SlideIslandConnecting(
+                    key: Key('slide_island_connecting'),
+                  )
+                else if (playerState == PlayerState.Won)
+                  const SlideIslandWinner(key: Key('slide_island_winner'))
+                else if (playerState == PlayerState.Lost)
+                  const SlideIslandLost(key: Key('slide_island_lost'))
+                else
+                  const PuzzleSections(),
+              ],
             ),
-            if (theme is! SimpleTheme)
-              theme.layoutDelegate.backgroundBuilder(state),
-          ],
+          ),
         );
       },
     );

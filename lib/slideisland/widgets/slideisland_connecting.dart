@@ -12,20 +12,23 @@ class SlideIslandConnecting extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Column(
-          children: const [
-            PuzzleName(),
-            PuzzleTitle(
-              title: 'Slide Island Royal',
-            ),
-            Text(
-              'Connecting to server',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.visible,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            CircularProgressIndicator(),
-          ],
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              PuzzleName(),
+              PuzzleTitle(
+                title: 'Slide Island Royal',
+              ),
+              Text(
+                'Connecting to server',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.visible,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              CircularProgressIndicator(),
+            ],
+          ),
         );
       },
     );

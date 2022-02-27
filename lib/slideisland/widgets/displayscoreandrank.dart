@@ -92,7 +92,7 @@ class DisplayScoreAndRank extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: const [
-                    SlideIslandPlayerPosition(),
+                    // SlideIslandPlayerPosition(),
                   ],
                 )
               ],

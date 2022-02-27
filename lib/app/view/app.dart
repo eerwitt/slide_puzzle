@@ -10,6 +10,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:very_good_slide_puzzle/helpers/helpers.dart';
@@ -60,70 +61,12 @@ class _AppState extends State<App> {
     _platformHelper = widget._platformHelperFactory();
 
     _timer = Timer(const Duration(milliseconds: 20), () {
-      for (var i = 1; i <= 15; i++) {
-        precacheImage(
-          Image.asset('assets/images/dashatar/green/$i.png').image,
-          context,
-        );
-        precacheImage(
-          Image.asset('assets/images/dashatar/blue/$i.png').image,
-          context,
-        );
-        precacheImage(
-          Image.asset('assets/images/dashatar/yellow/$i.png').image,
-          context,
-        );
-      }
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/green.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/green.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/blue.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/blue.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/yellow.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/yellow.png').image,
-        context,
-      );
       precacheImage(
         Image.asset('assets/images/logo_flutter_color.png').image,
         context,
       );
       precacheImage(
-        Image.asset('assets/images/logo_flutter_white.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/shuffle_icon.png').image,
-        context,
-      );
-      precacheImage(
         Image.asset('assets/images/timer_icon.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_large.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_medium.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_small.png').image,
         context,
       );
       precacheImage(
@@ -160,20 +103,23 @@ class _AppState extends State<App> {
       await http.get(Uri.parse('$localAssetsPrefix$filePath'));
       return;
     }
-    throw UnimplementedError(
-      'The function `prefetchToMemory` is not implemented '
-      'for platforms other than Web.',
-    );
   }
 
   @override
   void dispose() {
     _timer.cancel();
     super.dispose();
+
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: SystemUiOverlay.values,
+    ); // to re-show bars
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),

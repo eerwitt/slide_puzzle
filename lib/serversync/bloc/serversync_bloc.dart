@@ -19,7 +19,7 @@ class ServerSyncBloc extends Bloc<PuzzleEvent, ServerSyncState> {
             playerScore: 0,
             currentRound: 1,
             gameState: GameState.GameOver,
-            playerState: PlayerState.None,
+            playerState: PlayerState.Connecting,
             numberOfRounds: 1,
             secondsRemaining: 0,
             playersConnected: 1,
