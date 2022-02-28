@@ -30,7 +30,8 @@ flutter build web; if ($?) {firebase deploy}
 # Android
 & 'C:\Program Files\Java\jdk-12.0.1\bin\keytool.exe' -genkey -v -keystore D:\eerwitt\Documents\Flutter\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 & 'C:\Program Files\Java\jdk-12.0.1\bin\keytool.exe' -list -v -alias upload -keystore D:\eerwitt\Documents\Flutter\upload-keystore.jks
- firebase appdistribution:distribute --app 1:132071333569:android:926e725d98b786fc4ffe40 --release-notes "Test initial update" --groups "family" .\build\app\outputs\apk\release\app-release.apk
+
+flutter build apk; if ($?) {firebase appdistribution:distribute --app 1:132071333569:android:926e725d98b786fc4ffe40 --release-notes "Test initial update" --groups "family" .\build\app\outputs\apk\release\app-release.apk}
 ```
 
 ---

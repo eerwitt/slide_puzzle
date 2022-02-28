@@ -125,7 +125,7 @@ class _Puzzle extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const PuzzleHeader(),
+                // const PuzzleHeader(),
                 if (playerState == PlayerState.Connecting)
                   const SlideIslandConnecting(
                     key: Key('slide_island_connecting'),
