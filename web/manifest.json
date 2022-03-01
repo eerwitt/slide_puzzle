@@ -1,11 +1,11 @@
 {
-    "name": "Slide Puzzle",
-    "short_name": "Slide Puzzle",
+    "name": "Slide Island Royal",
+    "short_name": "Slide Island Royal",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A slide puzzle built for Flutter Challenge",
+    "description": "A battle royal slide puzzle!",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

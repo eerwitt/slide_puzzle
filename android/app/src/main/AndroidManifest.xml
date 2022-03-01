@@ -2,7 +2,7 @@
     package="com.lunchbreakgames.slideisland">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Slide Puzzle"
+        android:label="Slide Island Royal"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
