@@ -14,7 +14,7 @@ class DisplaySlideWidget extends StatefulWidget {
 class _DisplaySlideWidgetState extends State<DisplaySlideWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 1),
+    duration: const Duration(milliseconds: 1000),
     vsync: this,
   );
 

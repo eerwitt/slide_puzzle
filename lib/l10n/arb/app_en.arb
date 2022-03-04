@@ -28,6 +28,10 @@
     "@puzzleRank": {
         "description": "Score compared to competitors."
     },
+    "puzzlePlayers": "Competitors",
+    "@puzzlePlayers": {
+"description": "Number of competitors."
+    },
     "puzzleShuffle": "Shuffle",
     "@puzzleShuffle": {
         "description": "Shown on the button that shuffle the puzzle"

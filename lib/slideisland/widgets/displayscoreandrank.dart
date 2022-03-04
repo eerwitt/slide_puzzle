@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:very_good_slide_puzzle/colors/colors.dart';
 import 'package:very_good_slide_puzzle/l10n/l10n.dart';
 import 'package:very_good_slide_puzzle/layout/layout.dart';
-import 'package:very_good_slide_puzzle/slideisland/widgets/slideisland_rank.dart';
 import 'package:very_good_slide_puzzle/theme/theme.dart';
 import 'package:very_good_slide_puzzle/typography/typography.dart';
 
@@ -13,11 +12,15 @@ class DisplayScoreAndRank extends StatelessWidget {
     Key? key,
     required this.score,
     required this.rank,
+    required this.players,
+    required this.playersMovingOn,
     this.color,
   }) : super(key: key);
 
   final int score;
   final int rank;
+  final int players;
+  final int playersMovingOn;
 
   /// Defaults to [PuzzleTheme.defaultColor].
   final Color? color;
@@ -75,7 +78,7 @@ class DisplayScoreAndRank extends StatelessWidget {
                         color: textColor,
                       ),
                       duration: PuzzleThemeAnimationDuration.textStyle,
-                      child: Text(rank.toString()),
+                      child: Text('$rank / $players'),
                     ),
                     AnimatedDefaultTextStyle(
                       style: bodyTextStyle.copyWith(

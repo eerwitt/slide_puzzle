@@ -16,7 +16,6 @@ class SlideIslandConnecting extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              PuzzleName(),
               PuzzleTitle(
                 title: 'Slide Island Royal',
               ),

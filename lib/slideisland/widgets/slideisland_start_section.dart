@@ -44,6 +44,8 @@ class SlideIslandStartSection extends StatelessWidget {
           key: numberOfMovesAndTilesLeftKey,
           score: state.numberOfCorrectTiles,
           rank: serverState.playerRank,
+          players: serverState.playersConnected,
+          playersMovingOn: serverState.playersToMoveOn,
         ),
         const ResponsiveGap(
           small: 8,
