@@ -23,7 +23,7 @@ class SlideIslandPreGame extends StatelessWidget {
         return Column(
           children: [
             const Text(
-              'Slide tiles into place until the puzzle is complete.',
+              'Slide tiles into place until the puzzle is complete. Only the fastest will move onto the next round!',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -35,9 +35,25 @@ class SlideIslandPreGame extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 20,
+                      height: 15,
                       width: 300,
-                      decoration: const BoxDecoration(color: Colors.grey),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black54),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      height: 15,
+                      child: RoundProgress(
+                        height: 15,
+                        width: 300 / 3 * currentRound,
+                      ),
                     ),
                   ],
                 ),
@@ -67,44 +83,42 @@ class SlideIslandPreGame extends StatelessWidget {
                       height: 25,
                       child: Row(
                         children: [
-                          Container(
-                            width: 100,
-                            height: 25,
-                            alignment: const Alignment(1.2, 0),
-                            child: Container(
+                          if (currentRound == 1)
+                            Container(
+                              width: 100,
                               height: 25,
-                              width: 25,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.orange,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.black54),
-                              ),
+                              alignment: const Alignment(1.2, 0),
+                              child: const RoundNumberAnim(child: Text('1')),
+                            )
+                          else
+                            RoundNumber(
+                              visited: currentRound > 1,
                               child: const Text('1'),
                             ),
-                          ),
-                          Container(
-                            width: 100,
-                            height: 25,
-                            alignment: const Alignment(1.2, 0),
-                            child: Container(
+                          if (currentRound == 2)
+                            Container(
+                              width: 100,
                               height: 25,
-                              width: 25,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Colors.orange,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.black54),
-                              ),
+                              alignment: const Alignment(1.2, 0),
+                              child: const RoundNumberAnim(child: Text('2')),
+                            )
+                          else
+                            RoundNumber(
+                              visited: currentRound > 2,
                               child: const Text('2'),
                             ),
-                          ),
-                          Container(
-                            width: 100,
-                            height: 25,
-                            alignment: const Alignment(1.2, 0),
-                            child: const RoundNumberAnim(child: Text('3')),
-                          ),
+                          if (currentRound == 3)
+                            Container(
+                              width: 100,
+                              height: 25,
+                              alignment: const Alignment(1.2, 0),
+                              child: const RoundNumberAnim(child: Text('3')),
+                            )
+                          else
+                            RoundNumber(
+                              visited: currentRound > 2,
+                              child: const Text('3'),
+                            ),
                         ],
                       ),
                     ),
@@ -118,7 +132,7 @@ class SlideIslandPreGame extends StatelessWidget {
                 child: Image.asset(
                   theme.assetForRoundComplete(currentRound),
                   semanticLabel: 'Round Complete Test',
-                  fit: BoxFit.fill,
+                  width: 500,
                   height: 500,
                 ),
               ),
@@ -126,6 +140,34 @@ class SlideIslandPreGame extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class RoundNumber extends StatelessWidget {
+  const RoundNumber({Key? key, required this.child, required this.visited})
+      : super(key: key);
+
+  final Widget child;
+  final bool visited;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 25,
+      alignment: const Alignment(1.2, 0),
+      child: Container(
+        height: 25,
+        width: 25,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: visited ? Colors.orange : Colors.white,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.black54),
+        ),
+        child: child,
+      ),
     );
   }
 }
@@ -191,6 +233,76 @@ class RoundNumberAnimState extends State<RoundNumberAnim>
         ),
         child: _child,
       ),
+    );
+  }
+}
+
+class RoundProgress extends StatefulWidget {
+  const RoundProgress({Key? key, required this.width, required this.height})
+      : super(key: key);
+  final double width;
+  final double height;
+
+  @override
+  State<RoundProgress> createState() => _RoundProgressState();
+}
+
+/// AnimationControllers can be created with `vsync: this` because of TickerProviderStateMixin.
+class _RoundProgressState extends State<RoundProgress>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 1700),
+    vsync: this,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedProgress(
+      widget.width,
+      widget.height,
+      controller: _controller,
+    );
+  }
+}
+
+class AnimatedProgress extends AnimatedWidget {
+  const AnimatedProgress(
+    this.width,
+    this.height, {
+    Key? key,
+    required AnimationController controller,
+  }) : super(key: key, listenable: controller);
+
+  final double width;
+  final double height;
+
+  Animation<double> get _progress => listenable as Animation<double>;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: height,
+          width: width * _progress.value,
+          decoration: const BoxDecoration(
+            color: Colors.orange,
+          ),
+        ),
+      ],
     );
   }
 }
